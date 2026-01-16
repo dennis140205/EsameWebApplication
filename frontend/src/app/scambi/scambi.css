@@ -1,0 +1,211 @@
+/* --- CONTENITORE PRINCIPALE --- */
+.scambi-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* --- BARRA AZIONI IN ALTO --- */
+.actions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 0 5px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a4a3e;
+  margin: 0;
+  border-left: 5px solid #84cc16;
+  padding-left: 15px;
+}
+
+
+.btn-proponi {
+  background-color: #facc15;
+  color: #1a4a3e;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-proponi:hover {
+  background-color: #eab308;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  color: #000;
+}
+
+
+.card-widget {
+  background: white;
+  border-radius: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+
+details summary {
+  list-style: none;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.2s;
+}
+
+details[open] summary {
+  border-bottom: 1px solid #f1f5f9;
+  background-color: #fcfcfc;
+}
+
+details summary h3 {
+  color: #374151;
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.toggle-icon {
+  transition: transform 0.3s ease;
+}
+details[open] .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.details-content {
+  padding: 0;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* --- TABELLA SCAMBI --- */
+.trade-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.trade-row td {
+  padding: 20px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.trade-row:last-child td {
+  border-bottom: none;
+}
+
+/*  INFO SQUADRE E CALCIATORI  */
+.team-name {
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.players-info {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.swap-icon { color: #9ca3af; font-size: 1.1rem; }
+
+/* --- BADGE STATO --- */
+.status-pill {
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.credits-badge {
+  display: inline-block;
+  background-color: #f1f5f9;
+  color: #1a4a3e;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-left: 4px;
+  border: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+.player-proposto {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.player-richiesto {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.status-pill.in_attesa { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; }
+.status-pill.accettato { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.status-pill.rifiutato { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* --- BOTTONI AZIONE --- */
+.actions, .actions-row {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn-fanta-accetta,
+.btn-fanta-rifiuta,
+.btn-fanta-annulla {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-fanta-accetta { background-color: #dcfce7; color: #166534; }
+.btn-fanta-accetta:hover { background-color: #166534; color: white; }
+
+.btn-fanta-rifiuta { background-color: #fee2e2; color: #991b1b; }
+.btn-fanta-rifiuta:hover { background-color: #991b1b; color: white; }
+
+.btn-fanta-annulla { background-color: #f3f4f6; color: #6b7280; }
+.btn-fanta-annulla:hover { background-color: #e5e7eb; color: #374151; }
+
+/* SPINNER & EMPTY */
+.loading-spinner { text-align: center; padding: 40px; color: #1a4a3e; }
+.spinner { width: 30px; height: 30px; border: 3px solid #e5e7eb; border-top: 3px solid #1a4a3e; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+.empty-msg { padding: 30px; text-align: center; color: #9ca3af; font-style: italic; margin: 0; }
+
+.btn-proponi.disabled-btn {
+  background-color: #94a3b8 !important;
+  border-color: #64748b !important;
+  color: #f1f5f9 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  transform: none !important;
+  opacity: 0.8;
+}
+

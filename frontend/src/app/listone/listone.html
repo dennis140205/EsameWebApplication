@@ -1,0 +1,183 @@
+<div class="listone-card shadow-sm">
+  <div class="listone-header-inner">
+    <h2 class="section-title">Listone calciatori 2025/26</h2>
+
+    <div class="filter-controls">
+      <input type="text" placeholder="🔍 Cerca calciatore..." (input)="onSearch($event)" class="search-input">
+
+      <div class="role-pills">
+        <button (click)="filtraRuolo('')" class="pill">Tutti</button>
+        <button (click)="filtraRuolo('P')" class="pill p-pill">P</button>
+        <button (click)="filtraRuolo('D')" class="pill d-pill">D</button>
+        <button (click)="filtraRuolo('C')" class="pill c-pill">C</button>
+        <button (click)="filtraRuolo('A')" class="pill a-pill">A</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="player-grid">
+    @for (c of pagedCalciatori; track c.id) {
+      <div class="player-card" (click)="apriDettagli(c)">
+        <div class="role-tag" [attr.data-ruolo]="c.ruolo">{{c.ruolo}}</div>
+
+        <div class="player-photo">
+          @if (c.urlImmagine) {
+            <img [src]="c.urlImmagine" [alt]="c.nome">
+          } @else {
+            <div class="pro-silhouette">
+              <i class="bi bi-person-fill"></i>
+            </div>
+          }
+        </div>
+
+        <div class="player-body">
+          <h3>{{c.nome}}</h3>
+          <small>{{c.squadra}}</small>
+
+          <div class="card-stats">
+            <div class="stat-box">
+              <span>QT</span>
+              <strong>{{c.quotazione}}</strong>
+            </div>
+
+            </div>
+          </div>
+        </div>
+
+    }
+  </div>
+  @if (calciatoreSelezionato) {
+    <div class="modal-backdrop" (click)="chiudiDettagli()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+          <div class="header-info">
+            <div class="modal-img-wrapper">
+              @if (calciatoreSelezionato.urlImmagine) {
+                <img [src]="calciatoreSelezionato.urlImmagine"
+                     [alt]="calciatoreSelezionato.nome"
+                     class="modal-img"
+                     (error)="calciatoreSelezionato.urlImmagine = ''"> }
+              @else {
+                <div class="modal-silhouette">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+              }
+            </div>
+            <div>
+              <h2>{{calciatoreSelezionato.nome}}</h2>
+              <span class="badge team-badge">{{calciatoreSelezionato.squadra}}</span>
+              <span class="badge role-badge" [attr.data-ruolo]="calciatoreSelezionato.ruolo">
+                {{calciatoreSelezionato.ruolo}}
+              </span>
+            </div>
+          </div>
+          <button class="close-btn" (click)="chiudiDettagli()" title="Chiudi">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <h3>Statistiche stagionali</h3>
+          @if (isLoadingStats) {
+            <div class="loading-spinner">Caricamento dati...</div>
+          } @else if (statisticheSelezionate.length === 0) {
+            <p class="no-data">Nessun dato disponibile.</p>
+          } @else {
+            <div class="summary-container">
+              <div class="summary-box highlight">
+                <span class="summ-label">Media voti</span>
+                <span class="summ-value vote">{{ riepilogo.mediaVoto }}</span>
+                <small>su {{ riepilogo.presenze }} presenze</small>
+              </div>
+              <div class="summary-box">
+                <span class="summ-label">Gol fatti</span>
+                <span class="summ-value" [class.text-succes]="riepilogo.golFatti > 0">{{ riepilogo.golFatti }}</span>
+              </div>
+              <div class="summary-box">
+                <span class="summ-label">Gol subiti</span>
+                <span class="summ-value" [class.text-danger]="riepilogo.golSubiti > 0">{{ riepilogo.golSubiti }}</span>
+              </div>
+              <div class="summary-box">
+                <span class="summ-label">Assist</span>
+                <span class="summ-value" [class.text-succes]="riepilogo.assist > 0">{{ riepilogo.assist }}</span>
+              </div>
+              <div class="summary-box">
+                <span class="summ-label">Rigori parati</span>
+                <span class="summ-value" [class.text-success]="riepilogo.rigoriParati > 0">{{ riepilogo.rigoriParati }}</span>
+              </div>
+              <div class="summary-box">
+                <span class="summ-label">Rigori sbagliati</span>
+                <span class="summ-value" [class.text-danger]="riepilogo.rigoriSbagliati > 0">{{ riepilogo.rigoriSbagliati }}</span>
+              </div>
+              <div class="summary-box">
+                <span class="summ-label">Autogol</span>
+                <span class="summ-value" [class.text-danger]="riepilogo.autogol > 0">{{ riepilogo.autogol }}</span>
+              </div>
+              <div class="summary-box">
+                <span class="summ-label">Cartellini</span>
+                <div class="cards-summary">
+                  <span class="cartellino giallo" title="Ammonizioni"></span> {{ riepilogo.ammonizioni }}
+                  <span class="cartellino rosso ml-2" title="Espulsioni"></span> {{ riepilogo.espulsioni }}
+                </div>
+              </div>
+
+            </div>
+            <div class="table-responsive">
+              <table class="stats-table">
+                <thead>
+                <tr>
+                  <th title="Giornata">G</th>
+                  <th title="Voto">Voto</th>
+                  <th title="Gol fatti">GF</th>
+                  <th title="Gol subiti">GS</th>
+                  <th title="Assist">Ass</th>
+                  <th title="Rigori parati">RP</th>
+                  <th title="Rigori sbagliati">RS</th>
+                  <th title="Autogol">AG</th>
+                  <th title="Cartellino">Cartellino</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @for (s of statisticheSelezionate; track s.id) {
+                    <tr>
+                      <td class="giornata-cell">{{s.giornata}}ª</td>
+                      <td class="voto-cell">
+                        @if(s.voto) { <strong>{{s.voto}}</strong> } @else { <span class="sv">s.v.</span> }
+                      </td>
+                      <td>{{ s.golFatti > 0 ? s.golFatti : '-' }}</td>
+                      <td>{{ s.golSubiti > 0 ? s.golSubiti : '-' }}</td>
+                      <td>{{ s.assist > 0 ? s.assist : '-' }}</td>
+                      <td>{{ s.rigoriParati > 0 ? s.rigoriParati : '-' }}</td>
+                      <td class="text-danger">{{ s.rigoriSbagliati > 0 ? s.rigoriSbagliati : '-' }}</td>
+                      <td class="text-danger">{{ s.autogol > 0 ? s.autogol : '-' }}</td>
+                      <td>
+                        @if (s.espulsione) { <span class="cartellino rosso"></span> }
+                        @else if (s.ammonizione) { <span class="cartellino giallo"></span> }
+                        @else { - }
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="pagination">
+    <button (click)="cambiaPagina(currentPage - 1)" [disabled]="currentPage === 1">« Prec</button>
+
+    @for (p of getListaPagine(); track $index) {
+      <button
+        [class.active]="p === currentPage"
+        [class.dots]="p === '...'"
+        (click)="vaiAPagina(p)">
+        {{p}}
+      </button>
+    }
+    <button (click)="cambiaPagina(currentPage + 1)" [disabled]="currentPage === totalPages">Succ »</button>
+  </div>
+</div>

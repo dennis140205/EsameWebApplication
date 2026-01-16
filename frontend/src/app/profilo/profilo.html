@@ -1,0 +1,120 @@
+<div class="page-wrapper min-vh-100 bg-light">
+
+  <header class="hero-bg py-5 mb-5 text-white">
+    <div class="container">
+
+      @if (idLega !== -1) {
+        <a [routerLink]="['/lega', idLega, 'dashboard']" class="back-link mb-3">
+          <i class="bi bi-arrow-left"></i> Torna alla Dashboard
+        </a>
+      } @else {
+        <a routerLink="/" class="back-link mb-3">
+          <i class="bi bi-arrow-left me-2"></i> Torna alla Home
+        </a>
+      }
+
+      <div class="d-flex align-items-center mt-3">
+        <div class="rounded-circle profile-avatar me-4 shadow-lg">
+          <i class="bi bi-person-fill"></i>
+        </div>
+
+        <div>
+          <h1 class="fw-bold mb-0 text-white">Ciao, {{ user.nome }}!</h1>
+          <p class="mb-0 opacity-75 text-white">{{ user.email }}</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pb-5">
+
+    <form (ngSubmit)="salvaModifiche()">
+      <div class="row g-4">
+
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm p-4 h-100">
+            <h4 class="fw-bold text-fanta-dark mb-4 border-bottom pb-2">
+              <i class="bi bi-card-heading me-2"></i>Dati Personali
+            </h4>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="fw-bold small text-secondary mb-1">Nome *</label>
+                <input type="text" class="form-control fw-bold"
+                       [(ngModel)]="user.nome" name="nome" placeholder="Il tuo nome">
+              </div>
+
+              <div class="col-md-6">
+                <label class="fw-bold small text-secondary mb-1">Cognome *</label>
+                <input type="text" class="form-control fw-bold"
+                       [(ngModel)]="user.cognome" name="cognome" placeholder="Il tuo cognome">
+              </div>
+
+              <div class="col-12">
+                <label class="fw-bold small text-secondary mb-1">Email (Non modificabile)</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0 border"><i class="bi bi-envelope-fill"></i></span>
+                  <input type="email" class="form-control bg-light border-start-0"
+                         [(ngModel)]="user.email" name="email" readonly>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label class="fw-bold small text-secondary mb-1">Squadra del Cuore ❤️</label>
+
+                <div class="autocomplete-container">
+                  <input type="text"
+                         class="form-control fw-bold text-dark"
+                         [(ngModel)]="user.squadraPreferita"
+                         (input)="filtraSquadre()"
+                         (focus)="filtraSquadre()"
+                         (blur)="nascondiListaDelay()"
+                         name="squadra"
+                         placeholder="Scrivi la tua squadra..."
+                         autocomplete="off">
+
+                  <ul class="suggestions-list" *ngIf="mostraSuggerimenti && squadreFiltrate.length > 0">
+                    <li class="suggestion-item"
+                        *ngFor="let s of squadreFiltrate"
+                        (mousedown)="selezionaSquadra(s)">
+                      {{ s }}
+                    </li>
+                  </ul>
+                </div>
+                <small class="text-muted" *ngIf="!mostraSuggerimenti">Puoi scegliere dalla lista o scrivere una squadra personalizzata.</small>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm p-4 mb-4">
+            <h5 class="fw-bold text-danger mb-3 border-bottom pb-2">
+              <i class="bi bi-shield-lock-fill me-2"></i>Sicurezza
+            </h5>
+
+            <div class="mb-3">
+              <label class="fw-bold small text-secondary mb-1">Nuova Password</label>
+              <input type="password" class="form-control" [(ngModel)]="nuovaPassword" name="newPass" placeholder="Min. 8 car. (lettera+numero)">
+            </div>
+
+            <div class="mb-3">
+              <label class="fw-bold small text-secondary mb-1">Conferma Password</label>
+              <input type="password" class="form-control" [(ngModel)]="confermaPassword" name="confPass" placeholder="Ripeti password">
+            </div>
+
+            <div class="alert alert-light border small text-muted">
+              <i class="bi bi-info-circle me-1"></i> Lascia vuoti questi campi se non vuoi cambiare la password.
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-save w-100 text-uppercase">
+            <i class="bi bi-check-lg me-2"></i> Salva Modifiche
+          </button>
+
+        </div>
+      </div>
+    </form>
+  </main>
+</div>

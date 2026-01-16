@@ -1,0 +1,392 @@
+<div class="home-container">
+
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand">
+        <i class="bi bi-trophy-fill me-2"></i>FantaDEMACS
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto  mb-lg-0">
+          @if (currentUser) {
+            <li class="nav-item"><a class="nav-link active btn-zoom" routerLink="/le-mie-leghe"><b>LE MIE LEGHE</b></a></li>
+            <li class="nav-item">
+              <a class="nav-link btn-zoom" routerLink="/join-lega" style="cursor: pointer;"><b> PARTECIPA </b></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn-zoom" routerLink="/crea-lega" style="cursor: pointer;"><b> CREA </b></a>
+            </li>
+            @if (currentUser.ruolo === 'ADMIN' || currentUser.ruolo === 'ROLE_ADMIN') {
+              <li class="nav-item ms-lg-3"> <a class="nav-link btn-zoom admin-badge" routerLink="/admin">
+                <i class="bi bi-shield-lock-fill me-1"></i><b>ADMIN</b>
+              </a>
+              </li>
+            }
+          }
+        </ul>
+
+        <div class="d-flex gap-3 align-items-center">
+
+          @if (currentUser) {
+            <a [routerLink]="['/profilo']" class="text-decoration-none text-white d-flex align-items-center gap-2 btn-zoom"
+               style="cursor: pointer;" title="Vai al tuo profilo">
+
+              <div class="rounded-circle bg-white text-dark d-flex align-items-center justify-content-center shadow-sm"
+                   style="width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.5);">
+                <i class="bi bi-person-fill fs-5"></i>
+              </div>
+
+              <div class="d-none d-lg-block lh-1 text-start">
+                <span class="d-block small opacity-75">BENTORNATO</span>
+                <span class="fw-bold">{{ currentUser.nome }}</span>
+              </div>
+            </a>
+
+            <button class="btn-logout" (click)="logout()">
+              <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">ESCI</span>
+            </button>
+          }
+
+          @else {
+            <button class="btn btn-outline-light px-3 btn-zoom fw-bold" routerLink="/login">Accedi</button>
+            <button class="btn btn-accent px-3 btn-zoom fw-bold" routerLink="/register">Registrati</button>
+          }
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-banner text-center">
+    <div class="container">
+      <h1 class="display-4 fw-bold mb-3">Il Calcio è nulla senza il Fantacalcio</h1>
+      <p class="lead mb-4 opacity-75">Gestisci la tua lega e sfida i tuoi amici</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-8 mb-4">
+        <div class="d-flex align-items-center mb-3">
+          <h3 class="fw-bold text-dark m-0">
+            <i class="bi bi-newspaper me-2 text-success"></i>Ultime notizie
+          </h3>
+        </div>
+
+        @for (news of notizieVisualizzate; track $index) {
+          <div class="card news-card mb-3 position-relative">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img [src]="news.image" class="img-fluid rounded-start h-100 w-100"
+                     style="object-fit: cover; min-height: 180px;" alt="news image">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <div class="position-absolute top-0 end-0 p-3">
+                    <a [href]="news.url" target="_blank" class="link-articolo-completo">
+                      Articolo completo su {{ news.source.name }}
+                      <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </a>
+                  </div>
+
+                  <div class="mb-2">
+                    <span class="badge bg-secondary">{{ news.source.name }}</span>
+
+                  </div>
+
+                  <h5 class="card-title fw-bold pe-5">{{ news.title }}</h5>
+                  <p class="card-text text-secondary pe-3">{{ news.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="text-center mt-4">
+          <button (click)="espandiNews()" class="btn btn-light shadow-sm px-4 py-2 border fw-bold text-secondary">
+
+            @if (mostraTutte === false) {
+              <span>Vedi ultime notizie</span>
+              <i class="bi bi-chevron-down ms-2 text-success"></i> }
+
+            @else {
+              <span>Mostra meno</span>
+              <i class="bi bi-chevron-up ms-2 text-danger"></i> }
+
+          </button>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+
+        <div class="stats-box mb-4">
+          <div class="stats-header">
+            <h5 class="m-0 fw-bold">Serie A 2025-2026</h5>
+          </div>
+
+          <div class="d-flex border-bottom">
+            <div class="tab-selector"
+                 [class.active]="tabSelezionata === 'classifica'"
+                 (click)="setTab('classifica')">
+              Classifica
+            </div>
+            <div class="tab-selector"
+                 [class.active]="tabSelezionata === 'marcatori'"
+                 (click)="setTab('marcatori')">
+              Bomber
+            </div>
+          </div>
+
+          @if (tabSelezionata === 'classifica') {
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0 text-center align-middle">
+                <thead class="table-light small text-muted">
+                <tr>
+                  <th>#</th>
+                  <th class="text-start">Squadra</th>
+                  <th>Pt</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @for (row of top3Classifica; track $index) {
+                    <tr>
+                      <td class="fw-bold text-secondary">{{ row.pos }}</td>
+                      <td class="text-start fw-bold">{{ row.squadra }}</td>
+                      <td>{{ row.pt }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+
+          @if (tabSelezionata === 'marcatori') {
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0 text-center align-middle">
+                <thead class="table-light small text-muted">
+                <tr>
+                  <th class="text-start ps-3">Nome</th>
+                  <th>Squadra</th>
+                  <th>Gol</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @for (m of marcatori; track $index) {
+                    <tr>
+                      <td class="text-start ps-3 fw-bold">{{ m.nome }}</td>
+                      <td class="small text-muted">{{ m.squadra }}</td>
+                      <td class="fw-bold text-success">{{ m.gol }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+
+          <div class="p-3 text-center bg-light border-top">
+            <small>
+              <a href="#"
+                 class="text-decoration-none text-success fw-bold"
+                 data-bs-toggle="modal"
+                 data-bs-target="#classificaModal">
+                Vedi statistiche complete
+              </a>
+            </small>
+          </div>
+        </div>
+
+        <div class="card border-0 shadow-sm bg-dark text-white p-4 text-center"
+             style="background: linear-gradient(45deg, #2c3e50, #4ca1af);">
+          <i class="bi bi-calendar-event display-4 mb-3 text-info"></i>
+          <h5 class="text-uppercase opacity-75 small ls-1">Prossimo Turno</h5>
+          <h3 class="fw-bold mb-0">{{giornataAttuale}}ª Giornata</h3>
+
+        </div>
+        <button class="btn w-100 mt-3 py-2 shadow-sm fw-bold btn-probabili"
+                (click)="mostraCalendario = true"> <i class="bi bi-calendar-event"></i> Calendario
+        </button>
+
+      </div>
+    </div>
+  </div>
+  @if (mostraCalendario) {
+    <div class="fanta-modal-overlay" (click)="mostraCalendario = false">
+      <div class="fanta-modal-card" (click)="$event.stopPropagation()">
+
+        <div class="fanta-modal-header">
+          <div>
+            <h3 class="m-0 fw-bold">Calendario Serie A</h3>
+            <small class="opacity-75">Stagione 2025-2026</small>
+          </div>
+          <button class="fanta-close-btn" (click)="mostraCalendario = false">&times;</button>
+        </div>
+
+        <div class="matchday-switcher">
+          <button class="nav-arrow" (click)="cambiaGiornata(-1)" [disabled]="giornataNavigata <= 1">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+
+          <div class="text-center mx-4">
+            <span class="d-block small text-muted text-uppercase fw-bold">Turno</span>
+            <span class="matchday-display">{{ giornataNavigata }}ª</span>
+          </div>
+
+          <button class="nav-arrow" (click)="cambiaGiornata(1)" [disabled]="giornataNavigata >= 38">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="fanta-modal-body p-0">
+          <div class="match-container">
+            @for (match of calendarioMappa[giornataNavigata]; track $index) {
+              <div class="match-row">
+                <div class="team-box text-end">
+                  <span class="team-name">{{ match.homeTeam.shortName || match.homeTeam.name }}</span>
+                  <img [src]="match.homeTeam.crest" class="crest-icon ms-2" alt="logo">
+                </div>
+
+                <div class="status-box">
+                  @if (match.status === 'FINISHED') {
+                    <div class="score-badge">
+                      {{ match.score.fullTime.home }} - {{ match.score.fullTime.away }}
+                    </div>
+                  } @else {
+                  }
+                </div>
+
+                <div class="team-box text-start">
+                  <img [src]="match.awayTeam.crest" class="crest-icon me-2" alt="logo">
+                  <span class="team-name">{{ match.awayTeam.shortName || match.awayTeam.name }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+      </div>
+    </div>
+  }
+
+  <div class="modal fade" id="classificaModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+
+      <div class="modal-content fanta-modal-content">
+
+        <div class="fanta-modal-header">
+          <div class="header-text">
+            <h3 class="fanta-title">Statistiche Serie A</h3>
+            <span class="fanta-subtitle">Stagione 2025-2026</span>
+          </div>
+          <button type="button" class="fanta-close-btn" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="fanta-tabs-container">
+          <button class="fanta-tab"
+                  [class.active]="activeModalTab === 'classifica'"
+                  (click)="setModalTab('classifica')">
+            <i class="bi bi-list-ol"></i> Classifica
+          </button>
+
+          <button class="fanta-tab"
+                  [class.active]="activeModalTab === 'bomber'"
+                  (click)="setModalTab('bomber')">
+            <i class="bi bi-bullseye"></i> Bomber
+          </button>
+        </div>
+
+        <div class="modal-body fanta-modal-body">
+
+          @if (activeModalTab === 'classifica') {
+            <table class="fanta-table">
+              <thead>
+              <tr>
+                <th class="col-pos">Pos</th>
+                <th class="col-team text-start">Squadra</th>
+                <th class="col-pts">PG</th>
+                <th class="col-stat" title="Partite Giocate">PT</th>
+                <th class="col-stat d-none d-md-table-cell" title="Gol Fatti">GF</th>
+                <th class="col-stat d-none d-md-table-cell" title="Gol Subiti">GS</th>
+                <th class="col-stat" title="Differenza Reti">DR</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (row of interaClassifica; track $index) {
+                  <tr [ngClass]="{
+                      'zone-scudetto': row.pos === 1,
+                      'zone-champions': row.pos >= 2 && row.pos <= 4,
+                      'zone-europa': row.pos >= 5 && row.pos <= 6,
+                      'zone-conference': row.pos === 7,
+                      'zone-retrocessione': row.pos >= 18
+                    }">
+                    <td class="col-pos rank-number">{{ row.pos }}</td>
+                    <td class="col-team text-start">
+                      <div class="team-wrapper">
+                        <img [src]="row.logo" alt="logo">
+                        <span>{{ row.squadra }}</span>
+                      </div>
+                    </td>
+                    <td class="col-stat ">{{ row.pg }}</td>
+                    <td class="col-stat fw-bold">{{ row.pt }}</td>
+                    <td class="col-stat ">{{ row.gf }}</td>
+                    <td class="col-stat">{{ row.gs }}</td>
+                    <td class="col-stat">{{ row.dr }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          }
+
+          @if (activeModalTab === 'bomber') {
+            <table class="fanta-table">
+              <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="text-start">Giocatore</th>
+                <th class="text-start">Squadra</th>
+                <th class="col-pts">Gol</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (m of interimarcatori; track $index; let i = $index) {
+                  <tr>
+                    <td class="col-pos rank-number">{{ i + 1 }}</td>
+                    <td class="text-start player-name">{{ m.nome }}</td>
+                    <td class="text-start">
+                      <div class="team-wrapper">
+                        <img [src]="m.logo" alt="logo">
+                        <span class="team-label">{{ m.squadra }}</span>
+                      </div>
+                    </td>
+                    <td class="col-pts goal-highlight">{{ m.gol }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          }
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center text-white mt-5 py-4" style="background-color: #0f2e26;">
+    <div class="container">
+      <h5 class="fw-bold text-success mb-3">FantaDEMACS</h5>
+      <p class="small opacity-75 mb-3">Il miglior compagno per il tuo campionato di Fantacalcio.</p>
+      <div class="mb-3">
+        <i class="bi bi-instagram mx-2 fs-5 cursor-pointer"></i>
+        <i class="bi bi-facebook mx-2 fs-5 cursor-pointer"></i>
+        <i class="bi bi-twitter-x mx-2 fs-5 cursor-pointer"></i>
+      </div>
+
+    </div>
+  </footer>
+
+</div>

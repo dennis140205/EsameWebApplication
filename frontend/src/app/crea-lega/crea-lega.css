@@ -1,0 +1,176 @@
+
+.text-fanta-dark { color: #0f3e33; }
+.text-fanta-lime { color: #a3cf0d; }
+.bg-light { background-color: #f8f9fa !important; }
+
+
+.hero-bg {
+  height: 450px; /* Altezza sfondo verde */
+  background-color: #0f3e33;
+  /* Gradiente leggero */
+  background: linear-gradient(135deg, #0f3e33 0%, #082a22 100%);
+  border-bottom-left-radius: 50% 40px;
+  border-bottom-right-radius: 50% 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+/* Ombra testo titolo */
+.text-shadow {
+  text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.back-link {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+/* --- CARD CENTRALE FLUTTUANTE --- */
+.floating-card {
+  max-width: 650px;
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* Ombra morbida */
+  z-index: 10;
+  position: relative;
+  margin-top: 160px;
+  margin-bottom: 50px;
+}
+
+/* --- ICONA TROFEO --- */
+.icon-wrapper {
+  width: 90px;
+  height: 90px;
+  background-color: #a3cf0d;
+  color: white;
+  border: 5px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-top: -45px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease; /* Aggiunto per animazione cambio icona */
+}
+
+/* Icone grandi dentro l'input */
+.fs-4 { font-size: 1.5rem !important; }
+
+.input-group-text {
+  background: white;
+  border-right: none;
+  color: #a3cf0d;
+}
+
+.form-control, .form-select {
+  border-left: none;
+  box-shadow: none;
+}
+
+.input-group {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.input-group:focus-within {
+  border-color: #a3cf0d;
+  box-shadow: 0 0 0 4px rgba(163, 207, 13, 0.1);
+  transform: translateY(-2px);
+}
+
+
+.btn-lime {
+  background-color: #a3cf0d;
+  color: white;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.btn-lime:hover {
+  background-color: #0f3e33;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(15, 62, 51, 0.3);
+}
+
+/*  EFFETTI LINK  */
+.nav-link-hover:hover {
+  opacity: 0.8;
+  transform: translateX(-3px);
+  transition: all 0.2s;
+}
+
+
+
+.fade-in-animation {
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/*  TAB NAVIGAZIONE (Bonus/Soglie/Extra)  */
+.nav-pills .nav-link {
+  color: #6c757d;
+  padding: 10px 25px;
+  transition: all 0.3s;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #a3cf0d !important;
+  color: white !important;
+  box-shadow: 0 4px 10px rgba(163, 207, 13, 0.4);
+}
+
+
+.form-check-input {
+  cursor: pointer;
+  border-color: #ddd;
+}
+
+.form-check-input:checked {
+  background-color: #a3cf0d; /* Verde quando attivo */
+  border-color: #a3cf0d;
+}
+
+.form-check-input:focus {
+  border-color: #a3cf0d;
+  box-shadow: 0 0 0 4px rgba(163, 207, 13, 0.2); /*alone verde*/
+}
+
+
+/* Personalizza i bottoni laterali degli input numerici */
+.input-group .btn-outline-secondary {
+  border-color: #e2e8f0;
+  color: #6c757d;
+  font-weight: bold;
+  width: 45px;
+}
+
+.input-group .btn-outline-secondary:hover {
+  background-color: #f1f3f5;
+  color: #0f3e33;
+  border-color: #d3d9df;
+}
+
+
+.form-control.text-center {
+  background-color: white;
+  color: #0f3e33;
+  font-size: 1.1rem;
+}

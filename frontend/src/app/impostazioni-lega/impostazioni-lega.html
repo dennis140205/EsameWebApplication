@@ -1,0 +1,135 @@
+<div class="page-wrapper" *ngIf="!loading">
+  <main class="container py-4">
+    <div class="page-header mb-4">
+      <h1 class="league-title-dark">Regolamento Lega</h1>
+    </div>
+
+    <div class="info-banner" *ngIf="!isAdmin">
+      <p>ℹ️ Modalità sola lettura: solo il Presidente può modificare il regolamento.</p>
+    </div>
+
+    <div class="settings-grid" [class.is-readonly]="!isAdmin">
+
+      <div class="card-widget">
+        <div class="widget-header"><h3>⚙️ Generale</h3></div>
+        <div class="form-group league-code-box">
+          <label>Codice Invito Lega</label>
+          <div class="code-display">
+            <span class="code-text">{{ codiceLega }}</span>
+            <button class="btn-copy" (click)="copyCode()" title="Copia negli appunti">
+              <i class="bi bi-clipboard"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Budget Iniziale (Cr.)</label>
+          <input type="number" class="modern-input" [(ngModel)]="settings.budgetIniziale" [disabled]="!isAdmin">
+        </div>
+        <div class="form-group">
+          <label>Max Calciatori in Rosa</label>
+          <input type="number" class="modern-input" [(ngModel)]="settings.maxCalciatori" [disabled]="!isAdmin">
+        </div>
+        <div class="switch-row">
+          <label>Mercato Scambi Aperto</label>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="settings.mercatoScambiAperto" [disabled]="!isAdmin">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="card-widget">
+        <div class="widget-header"><h3>🛡️ Regole Attive</h3></div>
+        <div class="switch-row">
+          <label>Modificatore Difesa</label>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="settings.modificatoreDifesa" [disabled]="!isAdmin">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="switch-row">
+          <label>Porta Inviolata</label>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="settings.portaInviolata" [disabled]="!isAdmin">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="switch-row">
+          <label>MVP (Uomo Partita)</label>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="settings.mvp" [disabled]="!isAdmin">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="switch-row">
+          <label>Gol Vittoria</label>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="settings.golVittoria" [disabled]="!isAdmin">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="card-widget">
+        <div class="widget-header"><h3>📊 Soglie Punteggio</h3></div>
+        <div class="form-group">
+          <label>Soglia Primo Gol</label>
+          <input type="number" class="modern-input" [(ngModel)]="settings.sogliaGol" [disabled]="!isAdmin">
+        </div>
+        <div class="form-group">
+          <label>Step Fascia</label>
+          <input type="number" class="modern-input" [(ngModel)]="settings.stepFascia" [disabled]="!isAdmin">
+        </div>
+        <div class="footer-notice" *ngIf="!isAdmin">
+          <small>Le soglie definiscono i punti necessari per segnare i gol.</small>
+        </div>
+      </div>
+
+      <div class="card-widget full-width">
+        <div class="widget-header"><h3>⚽ Bonus e Malus</h3></div>
+        <div class="bonus-vertical-list">
+          <div class="bonus-row">
+            <label>Gol Segnato</label>
+            <input type="number" step="0.5" class="compact-input" [(ngModel)]="settings.bonusGol" [disabled]="!isAdmin">
+          </div>
+          <div class="bonus-row">
+            <label>Assist</label>
+            <input type="number" step="0.5" class="compact-input" [(ngModel)]="settings.bonusAssist" [disabled]="!isAdmin">
+          </div>
+          <div class="bonus-row">
+            <label>Ammonizione</label>
+            <input type="number" step="0.5" class="compact-input" [(ngModel)]="settings.malusAmmonizione" [disabled]="!isAdmin">
+          </div>
+          <div class="bonus-row">
+            <label>Espulsione</label>
+            <input type="number" step="0.5" class="compact-input" [(ngModel)]="settings.malusEspulsione" [disabled]="!isAdmin">
+          </div>
+          <div class="bonus-row">
+            <label>Gol Subito</label>
+            <input type="number" step="0.5" class="compact-input" [(ngModel)]="settings.malusGolSubito" [disabled]="!isAdmin">
+          </div>
+          <div class="bonus-row">
+            <label>Autogol</label>
+            <input type="number" step="0.5" class="compact-input" [(ngModel)]="settings.malusAutogol" [disabled]="!isAdmin">
+          </div>
+          <div class="bonus-row">
+            <label>Rigore Parato</label>
+            <input type="number" step="0.5" class="compact-input" [(ngModel)]="settings.bonusRigoreParato" [disabled]="!isAdmin">
+          </div>
+          <div class="bonus-row">
+            <label>Rigore Sbagliato</label>
+            <input type="number" step="0.5" class="compact-input" [(ngModel)]="settings.malusRigoreSbagliato" [disabled]="!isAdmin">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="actions-container" *ngIf="isAdmin">
+      <button class="btn-reset-settings" (click)="resetToDefault()">
+        <i class="bi bi-arrow-counterclockwise"></i> Ripristina Default
+      </button>
+      <button class="btn-save-settings" (click)="saveSettings()">💾 Salva Regolamento</button>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,82 @@
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card-widget">
+
+      <div class="widget-header d-flex justify-content-between align-items-center">
+        <h3>⚽ Schiera la tua Formazione</h3>
+        <select class="form-select select-modulo" [(ngModel)]="moduloScelto" (change)="titolari = []">
+          @for (m of moduliDisponibili; track m) { <option [value]="m">{{m}}</option> }
+        </select>
+      </div>
+
+      <div class="formation-container mt-4">
+        @for (ruolo of [{k:'P', l:'Portiere'}, {k:'D', l:'Difesa'}, {k:'C', l:'Centrocampo'}, {k:'A', l:'Attacco'}]; track ruolo.k) {
+          <div class="role-row mb-4">
+            <div class="role-header" [attr.data-ruolo]="ruolo.k">{{ruolo.l}}</div>
+            <div class="slots-wrapper">
+              @for (s of getTitolariPerRuolo(ruolo.k); track s.idCalciatore) {
+                <div class="player-slot filled" (click)="rimuovi(s)">
+                  <span class="badge-ruolo" [attr.data-ruolo]="s.ruolo">{{s.ruolo}}</span>
+                  <span class="name">{{s.nomeCalciatore}}</span>
+                  <i class="bi bi-dash-circle-fill text-danger"></i>
+                </div>
+              }
+              @for (i of getArrayVuoto(postiModulo[ruolo.k] - getTitolariPerRuolo(ruolo.k).length); track $index) {
+                <div class="player-slot empty" (click)="apriModale(ruolo.k)">
+                  <i class="bi bi-plus-circle-dotted"></i> Aggiungi {{ruolo.k === 'P' ? 'Portiere' : 'Giocatore'}}
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="bench-section mt-4 border-top pt-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="small-title m-0">🪑 PANCHINA ({{panchina.length}}/12)</h4>
+            <button class="btn-add-bench shadow-sm" (click)="apriModale('ANY')"><i class="bi bi-plus"></i> Aggiungi Riserva</button>
+          </div>
+          <div class="bench-list">
+            @for (s of panchina; track s.idCalciatore) {
+              <div class="bench-item" (click)="rimuovi(s)">
+                <span class="badge-ruolo-mini" [attr.data-ruolo]="s.ruolo">{{s.ruolo}}</span>
+                {{s.nomeCalciatore}} <i class="bi bi-x small ms-1"></i>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-save-final w-100 mt-3 py-3"
+            (click)="salva()"
+            [disabled]="isLoadingSalvataggio">
+      @if (isLoadingSalvataggio) {
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Salvataggio...
+      } @else {
+        💾 SALVA FORMAZIONE ({{titolari.length}}/11)
+      }
+    </button>
+  </div>
+</div>
+
+@if (isModalOpen) {
+  <div class="modal-backdrop" (click)="isModalOpen = false">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h4>Seleziona {{ruoloSelezionatoModale === 'ANY' ? 'Calciatore' : ruoloSelezionatoModale}}</h4>
+        <button class="btn-close-modal" (click)="isModalOpen = false">×</button>
+      </div>
+      <div class="modal-body">
+        @for (g of giocatoriFiltratiModale; track g.idCalciatore) {
+          <div class="selection-row" (click)="selezionaGiocatore(g)">
+            <span class="badge-ruolo" [attr.data-ruolo]="g.ruolo">{{g.ruolo}}</span>
+            <span class="fw-bold">{{g.nome}}</span>
+            <span class="small text-muted ms-auto">{{g.squadraReale}}</span>
+          </div>
+        } @empty {
+          <p class="text-center text-muted p-4">Nessun giocatore disponibile in rosa per questo ruolo.</p>
+        }
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,83 @@
+<div class="proponi-container">
+  <div class="card-widget trade-card">
+
+    <div class="widget-top-bar">
+      <a [routerLink]="['/lega', idLega, 'scambi']" class="btn-back-internal">
+        <i class="bi bi-arrow-left"></i> Annulla
+      </a>
+      <h3 class="widget-title">Nuova proposta</h3>
+    </div>
+
+    <div class="form-section">
+      <label class="section-label">Scegli l'avversario</label>
+      <select class="trade-select main-select" [(ngModel)]="proposta.idFantasquadraRicevente" (change)="onAvversarioSelezionato()">
+        <option [value]="0" disabled selected>-- Seleziona una squadra --</option>
+        <option *ngFor="let s of squadreAvversarie" [value]="s.idFantasquadra">
+          {{ s.nomeFantasquadra || s.nome_fantasquadra }}
+        </option>
+      </select>
+    </div>
+
+    <div class="trade-interface fade-in" *ngIf="proposta.idFantasquadraRicevente > 0">
+
+      <div class="trade-columns">
+
+        <div class="column offer-col">
+          <h4 class="col-title text-success"><i class="bi bi-box-arrow-up-right me-1"></i> La tua offerta</h4>
+          <div class="form-group">
+            <label>Il tuo giocatore:</label>
+            <select [(ngModel)]="proposta.idCalciatoreProposto" class="player-select">
+              <option [ngValue]="null">-- Nessuno --</option>
+              <option *ngFor="let c of rosaMia" [value]="c.id">
+                {{ c.ruolo }} - {{ c.nome }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Crediti (Opzionale):</label>
+            <div>
+              <span>💰</span>
+              <input type="number" [(ngModel)]="proposta.creditiProponente" class="form-control credit-input" placeholder="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="vs-divider">
+          <i class="bi bi-arrow-left-right"></i>
+        </div>
+
+        <div class="column request-col">
+          <h4 class="col-title text-danger"><i class="bi bi-box-arrow-in-down-left me-1"></i> La tua richiesta</h4>
+          <div class="form-group">
+            <label>Loro giocatore:</label>
+            <select [(ngModel)]="proposta.idCalciatoreRichiesto" class="player-select">
+              <option [ngValue]="null">-- Nessuno --</option>
+              <option *ngFor="let c of rosaAvversaria" [value]="c.id">
+                {{ c.ruolo }} - {{ c.nome }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Crediti (Opzionale):</label>
+            <div>
+              <span>💰</span>
+              <input type="number" [(ngModel)]="proposta.creditiRicevente" class="form-control credit-input" placeholder="0">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-action text-center mt-4">
+        <button class="btn-send-trade shadow"
+                (click)="inviaProposta()"
+                [disabled]="!proposta.idCalciatoreProposto && !proposta.idCalciatoreRichiesto">
+          <i class="bi bi-send-fill me-2"></i> Invia Proposta Ufficiale
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

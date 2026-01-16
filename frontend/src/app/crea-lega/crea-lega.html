@@ -1,0 +1,315 @@
+<div class="page-wrapper min-vh-100 bg-light position-relative overflow-hidden">
+
+  <div class="hero-bg">
+    <div class="container d-flex align-items-center pt-4 px-4">
+      <a routerLink="/" class="back-link" style="cursor: pointer;">
+        <i class="bi bi-arrow-left me-2 fs-5"></i> Torna alla Home
+      </a>
+    </div>
+
+    <div class="container text-center mt-4 pt-2">
+      <h1 class="text-white display-4 fw-bold text-shadow">
+        Fonda il tuo club
+      </h1>
+    </div>
+  </div>
+
+  <div class="container d-flex justify-content-center px-3">
+    <div class="card floating-card p-4 p-md-5">
+
+      <div *ngIf="stepCorrente === 1" class="fade-in-animation">
+        <div class="icon-wrapper">
+          <i class="bi bi-trophy-fill fs-1"></i>
+        </div>
+        <div class="text-center mt-4 mb-5">
+          <h2 class="fw-bold text-fanta-dark">Impostazioni Lega</h2>
+          <p class="text-secondary">Decidi le regole, tu sei il Presidente.</p>
+        </div>
+
+        <form>
+          <div class="mb-4">
+            <label class="fw-bold text-secondary small text-uppercase mb-1">Nome del Campionato</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="bi bi-award fs-4"></i></span>
+              <input type="text" class="form-control fw-bold text-fanta-dark"
+                     [(ngModel)]="datiLega.nome" name="nomeLega" placeholder="Es. Serie A dei Disperati">
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="fw-bold text-secondary small text-uppercase mb-1">Budget iniziale</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="bi bi-cash-stack fs-4"></i></span>
+              <select class="form-select fw-bold text-secondary" style="cursor: pointer;"
+                      [(ngModel)]="datiLega.regole.budgetIniziale" name="budget">
+                <option [ngValue]="250">250 Crediti (Hardcore)</option>
+                <option [ngValue]="500">500 Crediti (Classico)</option>
+                <option [ngValue]="1000">1000 Crediti (Riccanza)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="fw-bold text-secondary small text-uppercase mb-1">Numero partecipanti</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="bi bi-people-fill fs-4"></i></span>
+              <select class="form-select fw-bold text-secondary" style="cursor: pointer;"
+                      [(ngModel)]="datiLega.numeroSquadre" name="numSquadre">
+                <option [ngValue]="4">4 squadre</option>
+                <option [ngValue]="6">6 squadre</option>
+                <option [ngValue]="8">8 squadre</option>
+                <option [ngValue]="10">10 squadre</option>
+                <option [ngValue]="12">12 squadre</option>
+                <option [ngValue]="14">14 squadre</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="fw-bold text-secondary small text-uppercase mb-1">Nome della tua squadra</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="bi bi-shield-shaded fs-4"></i></span>
+              <input type="text" class="form-control fw-bold text-fanta-dark"
+                     [(ngModel)]="datiLega.squadraAdmin" name="nomeSquadra" placeholder="Es. FC ETTANERA">
+            </div>
+          </div>
+
+          <div class="d-grid">
+            <button type="button" class="btn btn-lime text-uppercase shadow" (click)="vaiAlleRegole()">
+              Continua <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="stepCorrente === 2" class="fade-in-animation">
+
+        <div class="icon-wrapper">
+          <i class="bi bi-trophy-fill fs-1"></i>
+        </div>
+
+        <div class="text-center mt-4 mb-4">
+          <h2 class="fw-bold text-fanta-dark">Regolamento</h2>
+          <p class="text-secondary">Personalizza i bonus, le soglie e gli extra.</p>
+        </div>
+
+        <ul class="nav nav-pills justify-content-center mb-5" style="background: #f8f9fa; padding: 5px; border-radius: 50px; width: fit-content; margin: 0 auto;">
+          <li class="nav-item"><button class="nav-link rounded-pill fw-bold small text-uppercase" [class.active]="tabRegole === 'bonus'" (click)="cambiaTabRegole('bonus')">Bonus/Malus</button></li>
+          <li class="nav-item"><button class="nav-link rounded-pill fw-bold small text-uppercase" [class.active]="tabRegole === 'soglie'" (click)="cambiaTabRegole('soglie')">Soglie</button></li>
+          <li class="nav-item"><button class="nav-link rounded-pill fw-bold small text-uppercase" [class.active]="tabRegole === 'extra'" (click)="cambiaTabRegole('extra')">Extra</button></li>
+        </ul>
+
+        <div *ngIf="tabRegole === 'bonus'">
+          <div class="row g-3">
+
+            <div class="col-6 mb-2">
+              <label class="fw-bold small text-secondary mb-1">Gol segnato⚽</label>
+              <div class="input-group shadow-sm">
+                <button class="btn btn-light border" (click)="aggiornaBonus('bonusGol', -0.5)">-</button>
+                <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.bonusGol" readonly>
+                <button class="btn btn-light border" (click)="aggiornaBonus('bonusGol', 0.5)">+</button>
+              </div>
+            </div>
+
+            <div class="col-6 mb-2">
+              <label class="fw-bold small text-secondary mb-1">Assist👟</label>
+              <div class="input-group shadow-sm">
+                <button class="btn btn-light border" (click)="aggiornaBonus('bonusAssist', -0.5)">-</button>
+                <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.bonusAssist" readonly>
+                <button class="btn btn-light border" (click)="aggiornaBonus('bonusAssist', 0.5)">+</button>
+              </div>
+            </div>
+
+            <div class="col-6 mb-2">
+              <label class="fw-bold small text-secondary mb-1">Rigore parato🧤</label>
+              <div class="input-group shadow-sm">
+                <button class="btn btn-light border" (click)="aggiornaBonus('bonusRigoreParato', -0.5)">-</button>
+                <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.bonusRigoreParato" readonly>
+                <button class="btn btn-light border" (click)="aggiornaBonus('bonusRigoreParato', 0.5)">+</button>
+              </div>
+            </div>
+
+            <div class="col-6 mb-2">
+              <label class="fw-bold small text-secondary mb-1">Rigore sbagliato❌</label>
+              <div class="input-group shadow-sm">
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusRigoreSbagliato', -0.5)">-</button>
+                <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.malusRigoreSbagliato" readonly>
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusRigoreSbagliato', 0.5)">+</button>
+              </div>
+            </div>
+
+            <div class="col-6 mb-2">
+              <label class="fw-bold small text-secondary mb-1">Gol subito🥅</label>
+              <div class="input-group shadow-sm">
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusGolSubito', -0.5)">-</button>
+                <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.malusGolSubito" readonly>
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusGolSubito', 0.5)">+</button>
+              </div>
+            </div>
+
+            <div class="col-6 mb-2">
+              <label class="fw-bold small text-secondary mb-1">Autogol🤦‍♂️</label>
+              <div class="input-group shadow-sm">
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusAutogol', -0.5)">-</button>
+                <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.malusAutogol" readonly>
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusAutogol', 0.5)">+</button>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <label class="fw-bold small text-secondary mb-1">Ammonizione🟨️</label>
+              <div class="input-group shadow-sm">
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusAmmonizione', -0.5)">-</button>
+                <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.malusAmmonizione" readonly>
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusAmmonizione', 0.5)">+</button>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <label class="fw-bold small text-secondary mb-1">Espulsione🟥</label>
+              <div class="input-group shadow-sm">
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusEspulsione', -0.5)">-</button>
+                <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.malusEspulsione" readonly>
+                <button class="btn btn-light border" (click)="aggiornaBonus('malusEspulsione', 0.5)">+</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div *ngIf="tabRegole === 'soglie'">
+          <div class="row g-4">
+            <div class="col-12">
+              <div class="p-3 border rounded-3 bg-white shadow-sm d-flex align-items-center justify-content-between">
+                <div>
+                  <h6 class="fw-bold text-fanta-dark mb-0">Soglia primo gol</h6>
+                  <small class="text-secondary">Punteggio minimo per fare 1-0</small>
+                </div>
+                <div class="input-group" style="width: 140px;">
+                  <button class="btn btn-light border" (click)="aggiornaIntero('sogliaGol', -1)">-</button>
+                  <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.sogliaGol" readonly>
+                  <button class="btn btn-light border" (click)="aggiornaIntero('sogliaGol', 1)">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 border rounded-3 bg-white shadow-sm d-flex align-items-center justify-content-between">
+                <div>
+                  <h6 class="fw-bold text-fanta-dark mb-0">Fasce gol successive</h6>
+                  <small class="text-secondary">Ogni quanti punti scatta il gol extra</small>
+                </div>
+                <div class="input-group" style="width: 140px;">
+                  <button class="btn btn-light border" (click)="aggiornaIntero('stepFascia', -1)">-</button>
+                  <input type="text" class="form-control text-center fw-bold bg-white" [value]="datiLega.regole.stepFascia" readonly>
+                  <button class="btn btn-light border" (click)="aggiornaIntero('stepFascia', 1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="tabRegole === 'extra'">
+          <div class="row g-3">
+
+            <div class="col-12">
+              <div class="p-3 border rounded-3 bg-white shadow-sm d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-light p-2 me-3 text-primary"><i class="bi bi-shield-check fs-5"></i></div>
+                  <div>
+                    <h6 class="fw-bold text-fanta-dark mb-0">Modificatore difesa</h6>
+                  </div>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" style="transform: scale(1.3);" [(ngModel)]="datiLega.regole.modificatoreDifesa">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 border rounded-3 bg-white shadow-sm d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-light p-2 me-3 text-success"><i class="bi bi-bricks fs-5"></i></div>
+                  <div>
+                    <h6 class="fw-bold text-fanta-dark mb-0">Porta inviolata</h6>
+                    <small class="text-secondary">Clean sheet (+1)</small>
+                  </div>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" style="transform: scale(1.3);" [(ngModel)]="datiLega.regole.portaInviolata">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 border rounded-3 bg-white shadow-sm d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-light p-2 me-3 text-warning"><i class="bi bi-star-fill fs-5"></i></div>
+                  <div>
+                    <h6 class="fw-bold text-fanta-dark mb-0">MVP del match</h6>
+                    <small class="text-secondary">Abilita il migliore in campo</small>
+                  </div>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" style="transform: scale(1.3);" [(ngModel)]="datiLega.regole.mvp">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 border rounded-3 bg-white shadow-sm d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-light p-2 me-3 text-danger"><i class="bi bi-lightning-charge-fill fs-5"></i></div>
+                  <div>
+                    <h6 class="fw-bold text-fanta-dark mb-0">Gol vittoria</h6>
+                    <small class="text-secondary">Bonus per chi decide il match</small>
+                  </div>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" style="transform: scale(1.3);" [(ngModel)]="datiLega.regole.golVittoria">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col-6">
+            <button class="btn btn-outline-secondary w-100 py-3 fw-bold" (click)="tornaIndietro()">
+              Indietro
+            </button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-lime w-100 py-3 fw-bold text-uppercase shadow-sm" (click)="creaLegaFinale()">
+              Crea Lega 🚀
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="stepCorrente === 3" class="fade-in-animation text-center">
+        <div class="mb-4">
+          <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success p-4 mb-3"
+               style="width: 100px; height: 100px;">
+            <i class="bi bi-check-lg display-3"></i>
+          </div>
+          <h2 class="fw-bold text-fanta-dark">Lega creata!</h2>
+          <p class="text-secondary">Il tuo torneo è pronto.</p>
+        </div>
+
+        <div class="p-4 bg-light border border-2 border-dashed rounded-3 mb-4">
+          <small class="text-uppercase fw-bold text-secondary">Codice Invito</small>
+          <h1 class="display-5 fw-bold text-fanta-dark mb-0">{{ codiceInvitoGenerato }}</h1>
+        </div>
+
+        <div class="d-grid gap-3">
+          <button class="btn btn-lime btn-lg py-3 shadow-sm text-uppercase d-flex align-items-center justify-content-center gap-2"
+                  (click)="copiaCodice()">
+            <i class="bi" [class.bi-clipboard]="!codiceCopiato" [class.bi-check-circle-fill]="codiceCopiato"></i>
+            {{ codiceCopiato ? 'Copiato negli appunti!' : 'Copia Codice' }}
+          </button>
+          <a routerLink="/" class="btn btn-outline-secondary py-3 fw-bold">Vai alla Home</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

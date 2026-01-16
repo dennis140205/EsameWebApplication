@@ -1,0 +1,120 @@
+/*. NOTIFICHE (TOAST) - SCENDONO DALL'ALTO */
+.notification-wrapper {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 11000;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toast-card {
+  pointer-events: auto;
+  min-width: 350px;
+  max-width: 600px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+  animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-card.success {
+  background-color: #10b981;
+  border-bottom: 4px solid #059669;
+}
+
+.toast-card.error {
+  background-color: #ef4444;
+  border-bottom: 4px solid #dc2626;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-150%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.fanta-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+}
+
+.fanta-modal-card {
+  background-color: #ffffff !important;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 10001;
+}
+
+
+/* Regola base per entrambi i bottoni */
+.fanta-modal-card .btn {
+  min-width: 140px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+
+  border: none !important;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+/*  TASTO ANNULLA  */
+.fanta-modal-card .btn-light {
+  background-color: #ef4444 !important;
+  color: white !important;
+  border-bottom: 4px solid #dc2626 !important;
+  margin: 0; /* Spazio gestito dal gap del contenitore */
+}
+
+/* --- TASTO CONFERMA  --- */
+
+.fanta-modal-card .btn-success {
+  background-color: #10b981 !important;
+  border-bottom: 4px solid #059669 !important;
+}
+
+
+.fanta-modal-card .btn-primary {
+  background-color: #3b82f6 !important;
+  border-bottom: 4px solid #1d4ed8 !important;
+}
+
+
+.fanta-modal-card .btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.fanta-modal-card .btn:active {
+  transform: translateY(0);
+  border-bottom-width: 2px !important;
+}

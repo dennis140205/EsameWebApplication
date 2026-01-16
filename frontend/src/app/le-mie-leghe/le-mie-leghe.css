@@ -1,0 +1,124 @@
+/*  LAYOUT BASE  */
+.page-wrapper {
+  background-color: #f3f4f6;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  padding-bottom: 40px;
+}
+
+/*  HEADER VERDE  */
+.hero-header {
+  background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+  color: white;
+  padding: 20px 0 100px 0; /* Spazio per far galleggiare la tabella */
+  border-bottom-left-radius: 50% 30px;
+  border-bottom-right-radius: 50% 30px;
+  position: relative;
+}
+
+.back-link {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-create {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.btn-create:hover { background: rgba(255,255,255,0.3); }
+
+.page-title { font-weight: 800; font-size: 2.5rem; margin-bottom: 5px; }
+.page-subtitle { opacity: 0.8; font-size: 1rem; }
+
+
+.floating-container {
+  margin-top: -60px;
+  position: relative;
+  z-index: 10;
+}
+
+.card-table {
+  background: white;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/*  TABELLA  */
+.leagues-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+
+.leagues-table th {
+  text-align: left;
+  padding: 20px;
+  color: #9ca3af;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.leagues-table td {
+  padding: 20px;
+  vertical-align: middle;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+
+.league-row { cursor: pointer; transition: background 0.2s; }
+.league-row:hover { background-color: #f9fafb; }
+.league-row:hover .arrow-icon { color: #064e3b !important; transform: translateX(5px); }
+
+
+.league-name { font-weight: 700; color: #1f2937; font-size: 1.1rem; }
+.league-next-match { font-size: 0.8rem; color: #6b7280; margin-top: 4px; }
+.arrow-icon { transition: transform 0.2s; }
+
+/* BADGE RUOLI */
+.badge-role {
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-admin {
+  background-color: #064e3b;
+  color: #ffffff;
+  border: 1px solid #064e3b;
+}
+
+.role-user {
+  background-color: #e0e7ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+}
+
+
+.status-active { background-color: #10b981; box-shadow: 0 0 0 3px #d1fae5; }
+.status-pending { background-color: #9ca3af; }
+.status-text { font-weight: 600; font-size: 0.9rem; color: #374151; }
+
+.text-center { text-align: center; }
+.text-end { text-align: right; }
+
+.text-end .d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+

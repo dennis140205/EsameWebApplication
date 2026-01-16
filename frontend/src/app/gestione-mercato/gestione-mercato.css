@@ -1,0 +1,385 @@
+
+
+.page-wrapper {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f3f4f6;
+  min-height: 100vh;
+}
+
+
+.market-container {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  max-width: 700px;
+  margin: 0 auto 50px auto; /* Margine sotto per staccare dalle rose */
+  border: 1px solid #e5e7eb;
+}
+
+.widget-header h3 {
+  color: #1a4a3e;
+  border-left: 5px solid #10b981; /* Verde Smeraldo */
+  padding-left: 15px;
+  margin: 0 0 10px 0;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.text-muted {
+  color: #6b7280;
+  margin-bottom: 30px;
+  display: block;
+  font-size: 0.9rem;
+}
+
+
+.riga-form {
+  margin-bottom: 25px;
+}
+
+.riga-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #374151;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+.input-stile {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  color: #1f2937;
+}
+
+.input-stile:focus {
+  background-color: #fff;
+  border-color: #10b981;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+
+.input-group {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.currency-label {
+  position: absolute;
+  right: 15px;
+  font-weight: bold;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+
+.bottone-conferma {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.bottone-conferma:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.bottone-conferma:disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+.contenitore-autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.lista-suggerimenti {
+  position: absolute;
+  top: 100%; /* Appare subito sotto l'input */
+  left: 0;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  z-index: 100; /* Assicura che stia sopra a tutto */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.voce-suggerimento {
+  padding: 12px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.voce-suggerimento:last-child {
+  border-bottom: none;
+}
+
+.voce-suggerimento:hover {
+  background-color: #ecfdf5;
+  color: #064e3b;
+}
+
+.nome-calciatore { font-weight: 700; }
+.info-calciatore { font-size: 0.85rem; color: #6b7280; }
+
+.feedback-selezione {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #059669;
+  background-color: #d1fae5;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/*GRIGLIA SQUADRE E ROSE */
+
+.container-rose {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.titolo-sezione {
+  text-align: center;
+  color: #1e293b;
+  font-weight: 800;
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.griglia-squadre {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+}
+
+
+.card-squadra {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.card-squadra:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Intestazione scura (Nome + Crediti) */
+.header-squadra {
+  background-color: #0f172a;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-squadra h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.badge-crediti {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Corpo della lista */
+.corpo-rosa {
+  padding: 0;
+  background-color: white;
+  flex-grow: 1;
+}
+
+.lista-giocatori {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.riga-giocatore {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+
+.riga-giocatore:last-child {
+  border-bottom: none;
+}
+
+.riga-giocatore:hover {
+  background-color: #f8fafc;
+}
+
+
+.info-sinistra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+/* Il quadratino colorato del ruolo */
+.ruolo-badge {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: white;
+  text-transform: uppercase;
+  flex-shrink: 0; /* Impedisce che si schiacci */
+}
+
+/* COLORI RUOLI (Devono corrispondere alle classi generate nel TS) */
+.ruolo-portiere .ruolo-badge       { background-color: #eab308; }
+.ruolo-difensore .ruolo-badge      { background-color: #22c55e; }
+.ruolo-centrocampista .ruolo-badge { background-color: #3b82f6; }
+.ruolo-attaccante .ruolo-badge     { background-color: #ef4444; }
+
+.nome-player {
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Gruppo destra: Prezzo + Bottone Elimina */
+.info-destra {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.costo-player {
+  font-weight: 700;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* IL BOTTONE X (Pulito, senza bordi) */
+.btn-annulla {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.btn-annulla:hover {
+  color: #ef4444;
+  transform: scale(1.2);
+}
+
+/* Stato vuoto */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+/* --- TASTO SVINCOLO  */
+.btn-svincola {
+  background: transparent;
+  border: none;
+
+  color: #94a3b8;
+  font-size: 20px;
+
+  font-weight: 700;
+  line-height: 1;
+  padding: 0 0 0 15px; /* Spazio a sinistra per staccarla dal prezzo/icona */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8; /* Leggera trasparenza per farla sembrare "disattivata" finché non ci vai sopra */
+}
+
+/* Effetto al passaggio del mouse: Diventa rossa e piena */
+.btn-svincola:hover {
+  color: #ef4444;
+  opacity: 1;
+  transform: scale(1.15); /* Leggero zoom */
+}
+
+.btn-svincola:active {
+  transform: scale(0.95); /* Si rimpicciolisce al click */
+}

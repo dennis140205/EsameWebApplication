@@ -1,0 +1,115 @@
+<div class="scambi-container">
+
+  <div class="actions-header" *ngIf="!isLoading && idMiaSquadra">
+    <h2 class="section-title">Mercato Scambi</h2>
+    <a class="btn-proponi shadow-sm"
+       [class.disabled-btn]="!mercatoScambiAperto"
+       (click)="mercatoScambiAperto ? apriNuovoScambio() : null">
+
+      <i class="bi" [ngClass]="mercatoScambiAperto ? 'bi-plus-lg' : 'bi-lock-fill'"></i>
+      {{ mercatoScambiAperto ? 'Proponi Scambio' : 'Mercato Chiuso' }}
+    </a>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Caricamento scambi...</p>
+  </div>
+
+  <div *ngIf="!isLoading && idMiaSquadra">
+
+    <div class="card-widget mb-4">
+      <details open>
+        <summary>
+          <h3>📤 Scambi Proposti (Inviati)</h3>
+          <i class="bi bi-chevron-down toggle-icon"></i>
+        </summary>
+
+        <div class="details-content">
+          <p *ngIf="scambiProposti.length === 0" class="empty-msg">Non hai proposte in attesa.</p>
+
+          <table class="trade-table" *ngIf="scambiProposti.length > 0">
+            <tr class="trade-row" *ngFor="let s of scambiProposti">
+              <td>
+                <div class="team-name">
+                  <span class="text-muted small me-2">A:</span> {{ s.nomeSquadraRicevente }}
+                </div>
+                <div class="players-info">
+                  <span class="text-success fw-bold">
+                    {{ s.nomeCalciatoreProposto }}
+                    <span class="credits-badge" *ngIf="s.creditiProponente > 0">+ {{ s.creditiProponente }} Cr.</span>
+                  </span>
+
+                  <span class="swap-icon">↔</span>
+
+                  <span class="text-danger fw-bold">
+                    {{ s.nomeCalciatoreRichiesto }}
+                    <span class="credits-badge" *ngIf="s.creditiRicevente > 0">+ {{ s.creditiRicevente }} Cr.</span>
+                  </span>
+                </div>
+              </td>
+              <td style="text-align: right;">
+                <div class="actions-row">
+                  <span class="status-pill" [ngClass]="s.stato.toLowerCase()">{{ s.stato }}</span>
+                  <button *ngIf="s.stato === 'IN_ATTESA'" class="btn-fanta-annulla" (click)="annulla(s.id)" title="Annulla proposta">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <div class="card-widget">
+      <details open>
+        <summary>
+          <h3>📥 Scambi Ricevuti</h3>
+          <i class="bi bi-chevron-down toggle-icon"></i>
+        </summary>
+
+        <div class="details-content">
+          <p *ngIf="scambiRicevuti.length === 0" class="empty-msg">Nessuna proposta ricevuta.</p>
+
+          <table class="trade-table" *ngIf="scambiRicevuti.length > 0">
+            <tr class="trade-row" *ngFor="let s of scambiRicevuti">
+              <td>
+                <div class="team-name">
+                  <span class="text-muted small me-2">Da:</span> {{ s.nomeSquadraProponente }}
+                </div>
+                <div class="players-info">
+                  <span class="text-success fw-bold">
+                    {{ s.nomeCalciatoreRichiesto }}
+                    <span class="credits-badge" *ngIf="s.creditiRicevente > 0">+ {{ s.creditiRicevente }} Cr.</span>
+                  </span>
+
+                  <span class="swap-icon">↔</span>
+
+                  <span class="text-danger fw-bold">
+                    {{ s.nomeCalciatoreProposto }}
+                    <span class="credits-badge" *ngIf="s.creditiProponente > 0">+ {{ s.creditiProponente }} Cr.</span>
+                  </span>
+                </div>
+              </td>
+              <td style="text-align: right;">
+                <div class="actions" *ngIf="s.stato === 'IN_ATTESA'">
+                  <button class="btn-fanta-accetta" (click)="accetta(s.id)">
+                    <i class="bi bi-check-lg"></i> Accetta
+                  </button>
+                  <button class="btn-fanta-rifiuta" (click)="rifiuta(s.id)">
+                    <i class="bi bi-x-lg"></i> Rifiuta
+                  </button>
+                </div>
+                <span *ngIf="s.stato !== 'IN_ATTESA'" class="status-pill" [ngClass]="s.stato.toLowerCase()">
+                  {{ s.stato }}
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+  </div>
+</div>

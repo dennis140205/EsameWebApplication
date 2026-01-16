@@ -1,0 +1,157 @@
+/* --- 1. LAYOUT & HEADER --- */
+.risultati-container { padding: 25px; background-color: #f8fafc; min-height: 100vh; font-family: 'Segoe UI', sans-serif; }
+.page-header { text-align: center; margin-bottom: 30px; }
+.page-header h1 { color: #1e293b; font-weight: 800; margin-bottom: 15px; font-size: 2rem; }
+
+/* --- 2. NAVIGATORE GIORNATE --- */
+.giornata-nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 0 auto;
+}
+
+.giornata-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 8px 25px;
+  border-radius: 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.giornata-display .emoji { font-size: 1.2rem; }
+
+.giornata-display .text-group { display: flex; flex-direction: column; align-items: flex-start; }
+
+.giornata-display .label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.5px; }
+
+.giornata-display .value { font-size: 1.4rem; font-weight: 900; color: #27ae60; line-height: 1.1; }
+
+.btn-nav {
+  width: 42px; height: 42px; border-radius: 50%; border: none; background: white;
+  color: #64748b; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.06); transition: all 0.2s;
+}
+
+.btn-nav:hover:not(:disabled) { background: #27ae60; color: white; transform: scale(1.1); }
+.btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* --- 3. SELETTORE MATCH & CARDS --- */
+.match-selector { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
+.pill-match { background: white; border: 1px solid #e2e8f0; padding: 8px 18px; border-radius: 30px; cursor: pointer; font-weight: 600; color: #64748b; transition: 0.3s; }
+.pill-match.active { background: #27ae60; color: white; border-color: #27ae60; box-shadow: 0 5px 12px rgba(39, 174, 96, 0.25); }
+
+.match-score-container { display: flex; justify-content: center; margin-bottom: 25px; }
+.compact-score-pill { background: white; border: 2px solid #27ae60; display: flex; align-items: center; gap: 15px; padding: 5px 20px; border-radius: 50px; }
+.score-numbers { display: flex; gap: 10px; font-size: 1.5rem; font-weight: 800; color: #1e293b; background: #f1f5f9; padding: 2px 15px; border-radius: 10px; }
+.team-initials { font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; }
+
+.arena-vs { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
+.card-squadra { flex: 1; background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; min-width: 320px; }
+.card-header { background-color: #27ae60; color: white; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+.modulo-badge { background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+.punti-badge { background: rgba(255,255,255,0.25); padding: 3px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; }
+
+/* --- 4. LISTA CALCIATORI --- */
+.section-divider { background-color: #f1f5f9; color: #64748b; padding: 6px 15px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
+
+.calciatore-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-bottom: 1px solid #f1f5f9; transition: 0.2s; }
+
+.calciatore-row.sbiadito { opacity: 0.45; filter: grayscale(30%); }
+
+.calciatore-row.attivo { opacity: 1; background-color: white; }
+
+.calciatore-row.bench.attivo { border-left: 4px solid #27ae60; background-color: rgba(39, 174, 96, 0.03); }
+
+.ruolo-tag { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 0.7rem; font-weight: 800; color: white; }
+
+[data-ruolo="P"] { background-color: #f1c40f; } [data-ruolo="D"] { background-color: #2ecc71; } [data-ruolo="C"] { background-color: #3498db; } [data-ruolo="A"] { background-color: #e74c3c; }
+
+.nome-calciatore { font-size: 0.95rem; font-weight: 500; color: #334155; }
+
+.voto-valore { font-weight: 700; color: #1e293b; background: #f1f5f9; padding: 2px 10px; border-radius: 6px; min-width: 42px; text-align: center; }
+
+.sub-icon { color: #27ae60; margin-left: 6px; font-size: 0.8rem; }
+
+.empty-msg { padding: 60px 20px; text-align: center; color: #94a3b8; font-style: italic; background: white; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+.empty-msg::before { content: '⚽'; display: block; font-size: 2rem; margin-bottom: 10px; opacity: 0.5; }
+
+/* --- ICONE BONUS/MALUS --- */
+.bonus-icons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.bonus-icon {
+  font-size: 0.95rem;
+  vertical-align: middle;
+  cursor: help;
+  transition: transform 0.2s;
+}
+
+.bonus-icon:hover {
+  transform: scale(1.3);
+}
+
+/* --- ICONA PALLONE CUSTOM --- */
+/* Trasforma il cerchio verde in un pallone stilizzato */
+.ball-icon {
+  color: white !important;
+  background-color: #198754;
+  border: 2px solid #198754;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* Ombra pallone */
+}
+
+.ball-icon::before {
+  content: "⚽";
+  font-size: 14px;
+  line-height: 1;
+  color: black;
+  background: transparent;
+  border: none;
+}
+
+.bi-circle-fill.ball-icon {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: black !important;
+  font-size: 1.1rem; /* Grandezza emoji */
+  width: auto;
+  height: auto;
+}
+
+/* --- CARTELLINI --- */
+.card-real {
+  display: inline-block;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  vertical-align: text-bottom;
+}
+
+.card-yellow {
+  background-color: #ffc107;
+  border: 1px solid #d39e00;
+}
+
+.card-red {
+  background-color: #dc3545;
+  border: 1px solid #a71d2a;
+}

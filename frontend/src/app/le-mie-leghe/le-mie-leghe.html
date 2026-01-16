@@ -1,0 +1,63 @@
+<div class="page-wrapper">
+
+  <header class="hero-header">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <a routerLink="/" class="back-link">
+          <i class="bi bi-arrow-left"></i> Torna alla Home
+        </a>
+        <a routerLink="/crea-lega" class="btn-create">
+          <i class="bi bi-plus-lg"></i> Nuova lega
+        </a>
+      </div>
+
+      <div class="text-center pb-5">
+        <h1 class="page-title">Le mie leghe</h1>
+        <p class="page-subtitle">Gestisci i tuoi campionati e porta la tua squadra alla vittoria.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container floating-container">
+    <div class="card-table">
+      <div class="table-responsive">
+        <table class="leagues-table">
+          <thead>
+          <tr>
+            <th>Nome Lega</th>
+            <th class="text-center">Il tuo Ruolo</th>
+            <th class="text-center">Iscritti</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let lega of elencoLeghe" (click)="apriLega(lega.id)" class="league-row">
+
+            <td>
+              <div class="league-info">
+                <div class="league-name">{{ lega.nome }}</div>
+                <div class="league-next-match" *ngIf="lega.prossimoTurno">
+                  <i class="bi bi-calendar-event"></i> {{ lega.prossimoTurno }}
+                </div>
+              </div>
+            </td>
+
+            <td class="text-center">
+                <span class="badge-role"
+                      [ngClass]="{'role-admin': lega.ruolo === 'Presidente', 'role-user': lega.ruolo === 'Partecipante'}">
+                  {{ lega.ruolo }}
+                </span>
+            </td>
+
+            <td class="text-center font-weight-bold text-dark">
+              {{ lega.iscritti }}
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+</div>

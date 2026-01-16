@@ -1,0 +1,98 @@
+<div class="page-container">
+
+  <div class="card-widget market-container">
+    <div class="widget-header">
+      <h3>✍️ GESTIONE MERCATO (ADMIN)</h3>
+      <p class="text-muted small">Assegna manualmente i giocatori alle squadre.</p>
+    </div>
+
+    <div class="form-contenuto">
+      <div class="riga-form">
+        <label>1. Cerca e Seleziona Calciatore (Svincolato)</label>
+        <input type="text" class="input-stile mb-2" placeholder="🔍 Scrivi il nome..." [(ngModel)]="searchText">
+        <select [(ngModel)]="idCalciatoreScelto" class="input-stile select-custom">
+          <option [ngValue]="null" disabled>-- Seleziona dalla lista --</option>
+          <option *ngFor="let g of calciatoriFiltrati" [ngValue]="g.id">
+            {{ g.ruolo }} - {{ g.nome }} ({{ g.squadra }}) [Qt. {{ g.quotazione }}]
+          </option>
+        </select>
+      </div>
+
+      <div class="riga-form">
+        <label>2. Assegna alla Fantasquadra</label>
+        <select [(ngModel)]="idSquadraDestinataria" class="input-stile select-custom">
+          <option [ngValue]="null" disabled>-- Scegli la squadra --</option>
+          <option *ngFor="let s of listaFantasquadre" [ngValue]="s.idFantasquadra">
+            {{ s.nomeFantasquadra }} (💰 {{ s.creditiResidui }})
+          </option>
+        </select>
+      </div>
+
+      <div class="riga-form">
+        <label>3. Prezzo (<span *ngIf="idSquadraDestinataria" class="text-success small">Max: {{ maxCreditiSquadra }}</span>)</label>
+        <div class="input-group">
+          <input type="number" [(ngModel)]="costoAcquisto" min="1" [max]="maxCreditiSquadra" class="input-stile" placeholder="1">
+          <span class="currency-label">Cr.</span>
+        </div>
+      </div>
+
+      <button (click)="eseguiAssegnazione()"
+              [disabled]="!idCalciatoreScelto || !idSquadraDestinataria || costoAcquisto <= 0"
+              class="bottone-conferma">
+        Ufficializza Acquisto
+      </button>
+    </div>
+  </div>
+
+  <div class="container-rose">
+    <h3 class="titolo-sezione">Situazione Rose in Tempo Reale</h3>
+
+    <div class="griglia-squadre">
+      <div class="card-squadra" *ngFor="let squadra of listaFantasquadre">
+
+        <div class="header-squadra">
+          <span class="nome-team">{{ squadra.nomeFantasquadra }}</span>
+          <span class="badge-crediti">💰 {{ squadra.creditiResidui }}</span>
+        </div>
+
+        <div class="corpo-rosa">
+          <ul class="lista-giocatori" *ngIf="rose[squadra.idFantasquadra] && rose[squadra.idFantasquadra].length > 0; else vuota">
+
+            <li *ngFor="let g of rose[squadra.idFantasquadra]"
+                class="riga-giocatore"
+                [ngClass]="getClassRuolo(g.ruolo)">
+
+              <div class="info-sinistra">
+                <span class="ruolo-badge">{{ g.ruolo }}</span>
+                <span class="nome-player">{{ g.nome }}</span>
+              </div>
+
+              <div class="info-destra">
+                <span class="costo-player">{{ g.prezzoAcquisto }} cr.</span>
+
+                <button class="btn-icona btn-svincola"
+                        (click)="annullaOperazione(g.idAcquisto, squadra.idFantasquadra, g.prezzoAcquisto, true)"
+                        title="Svincola (recuperi 50%)">
+                  💸
+                </button>
+
+                <button class="btn-icona btn-annulla"
+                        (click)="annullaOperazione(g.idAcquisto, squadra.idFantasquadra, g.prezzoAcquisto, false)"
+                        title="Annulla Errore (recuperi 100%)">
+                  &times;
+                </button>
+              </div>
+
+            </li>
+
+          </ul>
+
+          <ng-template #vuota>
+            <div class="empty-state">Nessun giocatore in rosa.</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

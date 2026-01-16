@@ -1,0 +1,94 @@
+<div class="container-fluid register-wrapper">
+  <div class="row no-gutters">
+
+    <div class="col-lg-8 d-none d-lg-block hero-col">
+
+      <a routerLink="/" class="back-link hover-scale">
+        <i class="bi bi-arrow-left"></i> Torna alla Home
+      </a>
+
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">Benvenuto Mister</h1>
+        <p class="hero-subtitle">La tua stagione inizia qui.</p>
+      </div>
+
+    </div>
+
+    <div class="col-lg-4 form-col">
+
+      <div class="form-container">
+
+        <div class="form-header">
+          <i class="bi bi-person-plus-fill form-icon"></i>
+          <h2 class="form-title">Crea Account</h2>
+          <p class="form-subtitle">Inserisci i tuoi dati per scendere in campo.</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()">
+
+          <div class="row input-group-row">
+            <div class="col-6">
+              <div class="form-floating custom-floating">
+                <input type="text" class="form-control" id="nome" placeholder="Nome"
+                       [(ngModel)]="dati.nome" name="nome" required>
+                <label for="nome">Nome</label>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-floating custom-floating">
+                <input type="text" class="form-control" id="cognome" placeholder="Cognome"
+                       [(ngModel)]="dati.cognome" name="cognome" required>
+                <label for="cognome">Cognome</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-floating custom-floating input-spacer">
+            <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                   [(ngModel)]="dati.email" name="email" required>
+            <label for="email">Indirizzo Email</label>
+          </div>
+
+          <div class="form-floating custom-floating input-spacer password-wrapper">
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" placeholder="Password"
+                   [(ngModel)]="dati.password" name="password" required>
+            <label for="password">Password</label>
+
+            <i class="bi password-toggle-icon" [class.bi-eye-slash-fill]="showPassword" [class.bi-eye-fill]="!showPassword" (click)="togglePassword()"></i>
+          </div>
+
+          <div class="form-floating custom-floating input-spacer password-wrapper">
+            <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" id="confermaPassword" placeholder="Conferma Password"
+                   [(ngModel)]="dati.confermaPassword" name="confermaPassword" required>
+            <label for="confermaPassword">Conferma Password</label>
+
+            <i class="bi password-toggle-icon" [class.bi-eye-slash-fill]="showConfirmPassword" [class.bi-eye-fill]="!showConfirmPassword" (click)="toggleConfirmPassword()"></i>
+          </div>
+
+          <button type="submit"
+                  [disabled]="isLoading"
+                  class="btn-register hover-scale">
+
+            @if (isLoading) {
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+
+            {{ isLoading ? 'REGISTRAZIONE...' : 'REGISTRATI' }}
+          </button>
+
+          <div class="form-footer">
+            <p class="footer-text">Sei già dei nostri?</p>
+            <a routerLink="/login" class="login-link hover-scale">
+              Accedi al tuo account
+            </a>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>

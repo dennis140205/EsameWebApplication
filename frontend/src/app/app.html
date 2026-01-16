@@ -1,0 +1,33 @@
+<div class="notification-wrapper">
+  @if (notificaService.msg(); as n) {
+    <div [class]="'toast-card ' + n.tipo">
+      <span class="icon">{{ n.tipo === 'success' ? '✅' : '❌' }}</span>
+      <span class="message">{{ n.testo }}</span>
+    </div>
+  }
+</div>
+
+@if (notificaService.mostraModale()) {
+  <div class="fanta-modal-overlay">
+    <div class="fanta-modal-card">
+      <h3 class="fw-bold">{{ notificaService.titoloModale() }}</h3>
+      <p class="text-secondary">{{ notificaService.messaggioModale() }}</p>
+
+      <div class="d-flex gap-3 justify-content-center mt-4">
+        <button type="button"
+                class="btn px-4"
+                [ngClass]="notificaService.coloreBottoneAnnulla()"
+                (click)="notificaService.annulla()">
+          Annulla
+        </button>
+        <button class="btn px-4 text-white fw-bold"
+                [ngClass]="notificaService.coloreBottone()"
+                (click)="notificaService.conferma()">
+          {{ notificaService.testoBottoneConferma() }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+<router-outlet></router-outlet>
+

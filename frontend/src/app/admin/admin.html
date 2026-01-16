@@ -1,0 +1,86 @@
+<div class="container py-5">
+  <div class="d-flex align-items-center mb-4">
+    <a routerLink="/" class="btn btn-outline-dark fw-bold shadow-sm">
+      <i class="bi bi-house-door-fill me-2"></i>Torna alla Home
+    </a>
+    <div class="d-flex align-items-center ms-4">
+      <h1 class="m-0">🛠️ Dashboard admin</h1>
+      @if (isLoading) {
+        <div class="spinner-border text-primary ms-3" role="status"></div>
+      }
+    </div>
+  </div>
+
+  <div class="card mb-4 border-info shadow-sm">
+    <div class="card-header bg-info text-white fw-bold">
+      <i class="bi bi-book me-2"></i>Guida Importazione Voti (Fantacalcio.it)
+    </div>
+    <div class="card-body bg-light">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <h6 class="fw-bold text-primary"><i class="bi bi-1-circle me-2"></i> Preparazione</h6>
+          <p class="small text-muted mb-0">Scarica il file da Fantacalcio.it.<br>Salvalo come <strong>CSV </strong>.</p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="fw-bold text-primary"><i class="bi bi-2-circle me-2"></i> Conferma</h6>
+          <p class="small text-muted mb-0">Seleziona il file e clicca sul tasto verde<br><strong>"CARICA VOTI"</strong> per salvare nel DB.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card h-100 border-primary shadow-sm">
+        <div class="card-header bg-primary text-white fw-bold">1. Configurazione Database</div>
+        <div class="card-body">
+          <button (click)="eseguiAzione('import')" class="btn btn-outline-primary w-100 mb-3" [disabled]="isLoading">
+            Importa Listone (CSV Interno)
+          </button>
+          <button (click)="eseguiAzione('sync')" class="btn btn-primary w-100" [disabled]="isLoading">
+            Sincronizza Foto API
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card h-100 border-warning shadow-sm">
+        <div class="card-header bg-warning fw-bold text-dark">2. Caricamento Dati Settimanali</div>
+        <div class="card-body">
+          <div class="mb-4 p-3 bg-light rounded border border-warning">
+            <label class="form-label fw-bold">Giornata di Campionato</label>
+            <input type="number" [(ngModel)]="giornataSelezionata" min="1" max="38" class="form-control form-control-lg" [disabled]="isLoading">
+            <small class="text-muted">I voti verranno salvati per la giornata indicata sopra.</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold small">Seleziona file CSV</label>
+            <input type="file" (change)="onFileSelected($event, 'voti')" class="form-control" accept=".csv" [disabled]="isLoading">
+          </div>
+
+          @if (fileSelezionato && !isLoading) {
+            <div class="alert alert-info border-info d-flex justify-content-between align-items-center mt-3 animate__animated animate__fadeIn">
+              <div>
+                <i class="bi bi-file-earmark-check-fill me-2 fs-4"></i>
+                <strong>Pronto:</strong> {{ fileSelezionato.name }}
+              </div>
+              <button (click)="eseguiCaricamentoEffettivo()" class="btn btn-success btn-lg fw-bold shadow">
+                CARICA VOTI
+              </button>
+            </div>
+          }
+
+          @if (messaggioStatus) {
+            <div class="alert mt-3"
+                 [class.alert-success]="messaggioStatus.includes('completata')"
+                 [class.alert-danger]="messaggioStatus.includes('Errore')"
+                 [class.alert-info]="isLoading">
+              {{ messaggioStatus }}
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="container-fluid min-vh-100 p-0 overflow-hidden">
+  <div class="row g-0 min-vh-100">
+
+    <div class="col-lg-7 d-none d-lg-block position-relative">
+      <img src="assets/pallone-mondiali-2026-nss-3.jpeg"
+           alt="Sfondo"
+           class="position-absolute top-0 start-0 w-100 h-100"
+           style="object-fit: cover; z-index: 0;">
+
+      <div class="position-absolute top-0 start-0 w-100 h-100 overlay-dark" style="z-index: 1;"></div>
+
+      <a routerLink="/" class="text-white  position-absolute top-0 start-0 m-4 fw-bold  align-items-center back-link" style="z-index: 10;">
+        <i class="bi bi-arrow-left me-2 fs-5"></i> Torna alla Home
+      </a>
+
+      <div class="position-absolute top-50 start-50 translate-middle text-center text-white w-75" style="z-index: 10;">
+        <h1 class="display-3 fw-bold mb-3">Scendi in Campo</h1>
+        <p class="fs-4 fw-light">Inserisci il codice, crea la tua rosa e sfida i tuoi amici per la gloria eterna.</p>
+      </div>
+    </div>
+
+    <div class="col-lg-5 col-12 d-flex align-items-center justify-content-center bg-white position-relative">
+
+      <a routerLink="/" class="text-secondary text-decoration-none position-absolute top-0 start-0 m-3 d-lg-none fw-bold d-flex align-items-center">
+        <i class="bi bi-arrow-left me-2"></i> Home
+      </a>
+
+      <div class="w-75 p-4">
+        <div class="text-center mb-5">
+          <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 icon-wrapper"
+               style="width: 80px; height: 80px; background-color: #f8f9fa;">
+            <i class="bi bi-people-fill fs-1 text-fanta-dark"></i>
+          </div>
+          <h2 class="fw-bold display-6 text-fanta-dark">Unisciti alla Lega</h2>
+          <p class="text-muted">Hai un codice invito? Inseriscilo qui sotto.</p>
+        </div>
+
+        <form>
+          <div class="mb-4">
+            <label class="form-label fw-bold text-secondary small text-uppercase">Codice Invito</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text bg-light border-end-0 text-secondary">
+                <i class="bi bi-ticket-perforated"></i>
+              </span>
+              <input type="text"
+                     class="form-control bg-light border-start-0 text-center fw-bold text-uppercase spacing-wide"
+                     placeholder="ES. LEGA-1234"
+                     [(ngModel)]="codiceInserito"
+                     name="codiceInput">
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="form-label fw-bold text-secondary small text-uppercase">Nome della tua Squadra</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text bg-light border-end-0 text-secondary">
+                <i class="bi bi-shield-shaded"></i>
+              </span>
+              <input type="text"
+                     class="form-control bg-light border-start-0"
+                     placeholder="Es. FC ETTANERA"
+                     [(ngModel)]="nomeSquadraInserito"
+                     name="squadraInput">
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="button"
+                    (click)="unisciti()"
+                    class="btn btn-lime btn-lg py-3 shadow-sm fw-bold">
+              ENTRA NELLA LEGA
+            </button>
+          </div>
+        </form>
+
+        <div class="text-center mt-4">
+          <p class="text-muted small">
+            Vuoi creare un nuovo torneo?
+            <a routerLink="/crea-lega" class="fw-bold text-decoration-none text-fanta-dark">Crea una Lega</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

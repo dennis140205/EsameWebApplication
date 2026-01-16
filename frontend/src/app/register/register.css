@@ -1,0 +1,215 @@
+/* --- LAYOUT GENERALE --- */
+.register-wrapper {
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+.no-gutters {
+  --bs-gutter-x: 0;
+}
+
+/* --- SEZIONE HERO (SINISTRA) --- */
+.hero-col {
+  position: relative;
+  background-image: url('/assets/McTominay.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8));
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 3rem;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-top: 15rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+
+.back-link {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 3;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.back-link i {
+  margin-right: 0.5rem;
+}
+
+/*  SEZIONE FORM (DESTRA)  */
+.form-col {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+.form-container {
+  width: 100%;
+  padding: 3rem;
+  max-width: 500px;
+}
+
+
+.form-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-icon {
+  font-size: 3.5rem;
+  color: #b4e636;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.form-title {
+  font-weight: 700;
+  color: #1a4a3e;
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  color: #6c757d;
+}
+
+/* Inputs */
+.input-group-row {
+  margin-bottom: 0.5rem;
+}
+
+.input-spacer {
+  margin-bottom: 1rem;
+}
+
+
+.custom-floating > .form-control:focus {
+  border-color: #b4e636;
+  box-shadow: 0 0 0 0.25rem rgba(180, 230, 54, 0.25);
+}
+
+/* Messaggi di errore */
+.custom-alert {
+  text-align: center;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.custom-alert i {
+  margin-right: 0.5rem;
+}
+
+/* Bottone Registrazione */
+.btn-register {
+  width: 75%;
+  display: block;
+  margin: 0 auto 1.5rem 13%;
+  padding: 0.75rem 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  background-color: #b4e636;
+  color: #1a4a3e;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  cursor: pointer;
+}
+
+.btn-register:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.spinner-border {
+  margin-right: 0.5rem;
+}
+
+/* Footer del Form */
+.form-footer {
+  text-align: center;
+}
+
+.footer-text {
+  color: #6c757d;
+  font-size: 0.875em;
+  margin-bottom: 0.25rem;
+}
+
+.login-link {
+  font-weight: 700;
+  color: #1a4a3e;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* --- EFFETTI --- */
+.hover-scale {
+  transition: transform 0.3s ease-in-out;
+  display: inline-block;
+}
+
+.hover-scale:hover {
+  transform: scale(1.1);
+
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+}
+
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+  color: #6c757d;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.password-toggle-icon:hover {
+  color: #1a4a3e;
+}

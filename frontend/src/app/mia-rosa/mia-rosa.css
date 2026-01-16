@@ -1,0 +1,91 @@
+/* --- VARIABILI --- */
+:host {
+  --fanta-primary: #1a4a3e;
+}
+
+/* --- WIDGET --- */
+.rosa-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.card-widget {
+  background: white;
+  border-radius: 20px;
+  padding: 25px 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  margin-top: 20px;
+}
+
+.widget-header h3 {
+  color: var(--fanta-primary);
+  border-left: 5px solid #84cc16;
+  padding-left: 12px;
+  margin-bottom: 25px;
+  font-weight: 800;
+}
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-icon {
+  position: absolute;
+  left: 12px;
+  color: #1a4a3e;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.minimal-select {
+  padding: 8px 12px 8px 35px;
+  border-radius: 12px;
+  border: 2px solid #edf2f7;
+  background-color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 180px;
+}
+
+.minimal-select:focus {
+  outline: none;
+  border-color: #1a4a3e;
+  box-shadow: 0 0 0 3px rgba(26, 74, 62, 0.1);
+}
+
+/* --- TABELLA --- */
+.custom-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+.custom-table th { color: #9ca3af; font-size: 0.8rem; text-transform: uppercase; padding: 0 15px; }
+.custom-table td { background-color: #f9fafb; padding: 15px; font-weight: 600; color: #374151; }
+.custom-table tr td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+.custom-table tr td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+
+/* Ruoli */
+.badge-ruolo {
+  display: inline-block; width: 32px; height: 32px; line-height: 32px;
+  text-align: center; border-radius: 8px; font-weight: 900; color: white;
+}
+.badge-ruolo[data-ruolo="P"] { background-color: #facc15; color: #000; }
+.badge-ruolo[data-ruolo="D"] { background-color: #1a4a3e; }
+.badge-ruolo[data-ruolo="C"] { background-color: #3b82f6; }
+.badge-ruolo[data-ruolo="A"] { background-color: #ef4444; }
+
+.text-center { text-align: center; }
+
+.empty-state {
+  padding: 3rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.team-reale-cell {
+  color: #64748b;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+

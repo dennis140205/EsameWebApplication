@@ -1,0 +1,198 @@
+<div class="risultati-container">
+  <header class="page-header">
+    <h1>Formazioni schierate</h1>
+
+    <div class="giornata-nav-wrapper">
+      <button class="btn-nav" (click)="cambiaGiornata(-1)" [disabled]="giornataVisualizzata <= 1">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <div class="giornata-display">
+        <span class="emoji">📅</span>
+        <div class="text-group">
+          <span class="label">Giornata</span>
+          <span class="value">{{ giornataVisualizzata }}</span>
+        </div>
+      </div>
+
+      <button class="btn-nav" (click)="cambiaGiornata(1)" [disabled]="giornataVisualizzata >= giornateTotaliLega">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="match-selector" *ngIf="partite.length > 0">
+    <button *ngFor="let p of partite; let i = index"
+            [class.active]="i === indexAttivo"
+            (click)="selezionaSfida(i)"
+            class="pill-match">
+      <span class="m-teams-text">
+        {{ getNomeSquadra(p.idSquadraCasa) }} vs {{ getNomeSquadra(p.idSquadraTrasferta) }}
+      </span>
+    </button>
+  </div>
+
+  <div class="match-score-container" *ngIf="partite.length > 0">
+    <div class="compact-score-pill">
+      <div class="score-numbers">
+        <span>{{ partite[indexAttivo].golCasa ?? 0 }}</span>
+        <span class="divider">-</span>
+        <span>{{ partite[indexAttivo].golTrasferta ?? 0 }}</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="arena-vs" *ngIf="partite.length > 0">
+    <div class="card-squadra">
+      <div class="card-header casa">
+        <div class="team-info-group">
+          <span class="team-name">{{ getNomeSquadra(partite[indexAttivo].idSquadraCasa) }}</span>
+          <span class="modulo-badge" *ngIf="formazioneCasa?.modulo">{{ formazioneCasa.modulo }}</span>
+        </div>
+        <span class="punti-badge">{{ totaleCasa | number:'1.1-2' }} pt</span>
+      </div>
+
+      <div class="card-body">
+        <div *ngIf="formazioneCasa">
+          <div *ngFor="let g of formazioneCasa.calciatori; let i = index">
+            <div *ngIf="g.stato === 'PANCHINA' && (i === 0 || formazioneCasa.calciatori[i-1]?.stato === 'TITOLARE')" class="section-divider">Panchina</div>
+            <div class="calciatore-row"
+                 [class.bench]="g.stato === 'PANCHINA'"
+                 [class.attivo]="(g.stato === 'TITOLARE' && g.fantaVoto) || g.subentrato"
+                 [class.sbiadito]="(g.stato === 'TITOLARE' && !g.fantaVoto) || (g.stato === 'PANCHINA' && !g.subentrato)">
+              <div class="calciatore-info">
+                <span class="ruolo-tag" [attr.data-ruolo]="g.ruolo">{{ g.ruolo }}</span>
+
+                <div class="d-flex flex-column">
+                  <span class="nome-calciatore">
+                    {{ g.nomeCalciatore }}
+                    <i *ngIf="g.subentrato" class="bi bi-arrow-left-right sub-icon text-muted ms-1" title="Subentrato"></i>
+                  </span>
+
+                  <div class="bonus-icons">
+                    <ng-container *ngIf="getStatisticheGiornata(g) as stat">
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.golFatti || 0)">
+                        <i class="bi bi-circle-fill text-success bonus-icon ball-icon" title="Gol fatto"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.golSubiti || 0)">
+                        <i class="bi bi-arrow-down-circle-fill text-danger bonus-icon" title="Gol subito"></i>
+                      </ng-container>
+
+                      <ng-container *ngIf="g.ruolo === 'P' && stat.golSubiti === 0 && stat.voto">
+                        <i class="bi bi-shield-lock-fill text-success bonus-icon" title="Porta inviolata"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.assist || 0)">
+                        <i class="bi bi-magic text-primary bonus-icon" title="Assist"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.rigoriParati || 0)">
+                        <i class="bi bi-hand-thumbs-up-fill text-success bonus-icon" title="Rigore parato"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.rigoriSbagliati || 0)">
+                        <i class="bi bi-x-octagon-fill text-danger bonus-icon" title="Rigore sbagliato"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.autogol || 0)">
+                        <i class="bi bi-exclamation-triangle-fill text-danger bonus-icon" title="Autogol"></i>
+                      </ng-container>
+
+                      <span *ngIf="stat.ammonizione" class="card-real card-yellow bonus-icon" title="Ammonizione "></span>
+
+                      <span *ngIf="stat.espulsione" class="card-real card-red bonus-icon" title="Espulsione"></span>
+
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <span class="voto-valore">{{ g.fantaVoto || '—' }}</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!formazioneCasa" class="empty-msg">Formazione non schierata</div>
+      </div>
+    </div>
+    <div class="card-squadra">
+      <div class="card-header trasferta">
+        <div class="team-info-group">
+          <span class="team-name">{{ getNomeSquadra(partite[indexAttivo].idSquadraTrasferta) }}</span>
+          <span class="modulo-badge" *ngIf="formazioneTrasferta?.modulo">{{ formazioneTrasferta.modulo }}</span>
+        </div>
+        <span class="punti-badge">{{ totaleTrasferta | number:'1.1-2' }} pt</span>
+      </div>
+
+      <div class="card-body">
+        <div *ngIf="formazioneTrasferta">
+          <div *ngFor="let g of formazioneTrasferta.calciatori; let i = index">
+            <div *ngIf="g.stato === 'PANCHINA' && (i === 0 || formazioneTrasferta.calciatori[i-1]?.stato === 'TITOLARE')" class="section-divider">Panchina</div>
+            <div class="calciatore-row"
+                 [class.bench]="g.stato === 'PANCHINA'"
+                 [class.attivo]="(g.stato === 'TITOLARE' && g.fantaVoto) || g.subentrato"
+                 [class.sbiadito]="(g.stato === 'TITOLARE' && !g.fantaVoto) || (g.stato === 'PANCHINA' && !g.subentrato)">
+              <div class="calciatore-info">
+                <span class="ruolo-tag" [attr.data-ruolo]="g.ruolo">{{ g.ruolo }}</span>
+
+                <div class="d-flex flex-column">
+                  <span class="nome-calciatore">
+                    {{ g.nomeCalciatore }}
+                    <i *ngIf="g.subentrato" class="bi bi-arrow-left-right sub-icon text-muted ms-1" title="Subentrato"></i>
+                  </span>
+
+                  <div class="bonus-icons">
+                    <ng-container *ngIf="getStatisticheGiornata(g) as stat">
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.golFatti || 0)">
+                        <i class="bi bi-circle-fill text-success bonus-icon ball-icon" title="Gol fatto"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.golSubiti || 0)">
+                        <i class="bi bi-arrow-down-circle-fill text-danger bonus-icon" title="Gol subito"></i>
+                      </ng-container>
+
+                      <ng-container *ngIf="g.ruolo === 'P' && stat.golSubiti === 0 && stat.voto">
+                        <i class="bi bi-shield-lock-fill text-success bonus-icon" title="Porta inviolata"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.assist || 0)">
+                        <i class="bi bi-magic text-primary bonus-icon" title="Assist"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.rigoriParati || 0)">
+                        <i class="bi bi-hand-thumbs-up-fill text-success bonus-icon" title="Rigore parato"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.rigoriSbagliati || 0)">
+                        <i class="bi bi-x-octagon-fill text-danger bonus-icon" title="Rigore sbagliato"></i>
+                      </ng-container>
+
+                      <ng-container *ngFor="let _ of [].constructor(stat.autogol || 0)">
+                        <i class="bi bi-exclamation-triangle-fill text-danger bonus-icon" title="Autogol"></i>
+                      </ng-container>
+
+                      <span *ngIf="stat.ammonizione" class="card-real card-yellow bonus-icon" title="Ammonizione"></span>
+
+                      <span *ngIf="stat.espulsione" class="card-real card-red bonus-icon" title="Espulsione"></span>
+
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <span class="voto-valore">{{ g.fantaVoto || '—' }}</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!formazioneTrasferta" class="empty-msg">Formazione non schierata</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state-lega" *ngIf="partite.length === 0">
+    <div class="empty-msg">
+      <p>La tua lega inizierà con la prossima giornata di Serie A.</p>
+    </div>
+  </div>
+</div>

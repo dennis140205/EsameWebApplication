@@ -1,0 +1,102 @@
+<div class="page-wrapper">
+  <header class="hero-header">
+    <div class="container">
+      <a routerLink="/" class="back-link">
+        <i class="bi bi-arrow-left"></i> Esci dalla Lega
+      </a>
+
+      <div class="header-content">
+        <div class="left-info">
+          <span class="sub-label">BENVENUTO NELLA LEGA</span>
+          <h1 class="league-title">{{ nomeLega }}</h1>
+          <div class="user-badge" [routerLink]="['/profilo', idLega]">
+            <i class="bi bi-person-circle"></i>
+            <span>{{ username }}</span>
+          </div>
+
+        </div>
+
+        @if (isCalendarioGenerato){
+
+          <div class="center-info">
+
+
+            <div class="timer-panel" [class.urgent]="isUrgent" [class.live]="isLive">
+              <div class="timer-wrapper">
+
+                @if (isLive) {
+                  <span class="timer-text">⚽ SERIE A LIVE</span>
+                } @else {
+                  <span class="timer-label">RICORDATI DI SCHIERARE!</span>
+                  <span class="timer-countdown">
+                <i class="bi bi-hourglass-split"></i> {{ countdownStr }}
+              </span>
+                }
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="right-info">
+          <h2 class="team-name">{{ nomeSquadra }}</h2>
+          <div class="credits-pill">💰 {{ creditiResidui }} Cr.</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content container">
+    <div class="floating-actions">
+      <div class="primary-buttons">
+        <button class="btn-action btn-lime"
+                routerLink="formazione"
+                [disabled]="!isCalendarioGenerato || isLive">
+          ⚽ {{ !isCalendarioGenerato ? 'Lega non attiva' : (isLive ? 'Tempo scaduto' : 'Schiera Formazione') }}
+        </button>
+
+        <button class="btn-action btn-red"
+                routerLink="risultati"
+                [disabled]="!isCalendarioGenerato">
+          ⚡ Risultati
+        </button>
+      </div>
+
+      <div class="secondary-buttons">
+        <button class="btn-small" routerLink="dashboard" routerLinkActive="active-btn">🏠 Home</button>
+
+        <button class="btn-small"
+                routerLink="rosa"
+                [disabled]="!isCalendarioGenerato"
+                routerLinkActive="active-btn">📊 Rosa</button>
+
+
+
+        <button class="btn-small"
+                routerLink="listone"
+                [disabled]="!isCalendarioGenerato"
+                routerLinkActive="active-btn">📜 Listone</button>
+
+        <button class="btn-small"
+                routerLink="scambi"
+                [disabled]="!isCalendarioGenerato"
+                routerLinkActive="active-btn"
+                style="position: relative;">
+          🤝 Scambi
+          <span *ngIf="numNotifiche > 0" class="badge-notifica">!</span>
+        </button>
+
+        <button *ngIf="isAdmin"
+                class="btn-small"
+                routerLink="gestione-mercato"
+                routerLinkActive="active-btn">✍️ Gestione Mercato</button>
+
+        <button class="btn-small"
+                routerLink="impostazioni-lega"
+                routerLinkActive="active-btn">ℹ️ Impostazioni</button>
+
+      </div>
+    </div>
+
+    <router-outlet></router-outlet>
+  </main>
+</div>
