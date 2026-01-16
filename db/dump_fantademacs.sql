@@ -2,12 +2,12 @@
 -- PostgreSQL database dump
 --
 
-\restrict 5oBJthgSyMPK9FBox3xjIPoHRM5O3POLThO7gduKbmvJz7HjNiriyqslRzfvWe8
+\restrict mgOJYc1KZMnF3bWLgyt008xsI2svOmUXZg87zApc4qcp80chuGXTZJao0GTOUhe
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.1
 
--- Started on 2026-01-16 18:20:32
+-- Started on 2026-01-16 18:35:43
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12003,7 +12003,7 @@ COPY public.statistiche (id, id_calciatore, giornata, voto, gol_fatti, gol_subit
 --
 
 COPY public.utenti (id, nome, cognome, email, password, ruolo, squadra_preferita) FROM stdin;
-8	admin	admin	admin@admin.com	$2a$10$DQF/2vnE9SPKEt.NaXMlteieygu41XQg2pforPpztPa31utwGhpl2	USER	\N
+8	admin	admin	admin@admin.com	$2a$10$DQF/2vnE9SPKEt.NaXMlteieygu41XQg2pforPpztPa31utwGhpl2	ADMIN	\N
 \.
 
 
@@ -12439,11 +12439,11 @@ ALTER TABLE ONLY public.schieramento
     ADD CONSTRAINT schieramento_id_formazione_fkey FOREIGN KEY (id_formazione) REFERENCES public.formazioni(id) ON DELETE CASCADE;
 
 
--- Completed on 2026-01-16 18:20:32
+-- Completed on 2026-01-16 18:35:43
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 5oBJthgSyMPK9FBox3xjIPoHRM5O3POLThO7gduKbmvJz7HjNiriyqslRzfvWe8
+\unrestrict mgOJYc1KZMnF3bWLgyt008xsI2svOmUXZg87zApc4qcp80chuGXTZJao0GTOUhe
 
