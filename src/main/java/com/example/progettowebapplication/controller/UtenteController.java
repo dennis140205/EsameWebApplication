@@ -35,9 +35,6 @@ public class UtenteController {
     // Chiamata: POST http://localhost:8080/utente/register
     @PostMapping("/register")
     public UtenteDTO register(@RequestBody UtenteDTO utente) {
-        if ("admin@admin.com".equalsIgnoreCase(utente.getEmail())) {
-           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Email riservata.");
-        }
         // Controlla se si è già loggati
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
